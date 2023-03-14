@@ -61,6 +61,40 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV
 }
 ```
 
+### Using the legacy_node_id
+
+If you use the legacy_node_id, but include the `X-Github-Next-Global-ID: 1` header then the project will get created, but a deprecation warning will show up letting you  know that you should use `next_global_id` instead.
+
+##### Powershell
+```graphql
+gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV2(input:{ownerId:\"MDQ6VXNlcjg3MDM3MjQy\",title:\"TF-Project\"}){projectV2{id}}}'
+```
+##### Result
+```json
+{
+  "data": {
+    "createProjectV2": {
+      "projectV2": {
+        "id": "PVT_kwHOBTAVOs4ANTjy"
+      }
+    }
+  },
+  "extensions": {
+    "warnings": [
+      {
+        "type": "DEPRECATION",
+        "message": "The id MDQ6VXNlcjg3MDM3MjQy is deprecated. Update your cache to use the next_global_id from the data payload.",
+        "data": {
+          "legacy_global_id": "MDQ6VXNlcjg3MDM3MjQy",
+          "next_global_id": "U_kgDOBTAVOg"
+        },
+        "link": "https://docs.github.com"
+      }
+    ]
+  }
+}
+```
+
 ## Get node_id for project
 
 ##### Powershell
@@ -82,5 +116,12 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ user(lo
 
 
 ## Links
+- https://github.com/boblangley/tf-automation
+- https://cli.github.com/manual/gh_api
 - https://devopsjournal.io/blog/2022/11/28/github-graphql-queries
 - https://github.com/community/community/discussions/39777
+- https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+- https://api.github.com/users/{username}
+- https://docs.gitlab.com/ee/api/projects.html
+- https://www.apollographql.com/blog/graphql/basics/using-the-github-graphql-api-with-apollo-studio-explorer/
+- https://graphql.org/
