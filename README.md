@@ -44,6 +44,7 @@ To create the project, replace OWNER_ID with the node ID of the new project owne
 To create the project, replace `OWNER_ID` with the `node_id` of the new project owner using the new `next_global_id` and replace `PROJECT_NAME` with a name for the project.
 
 ##### Powershell
+When using powershell and doing a query or mutation make sure to escape the quotation marks `"` using a a backslash `\` when indicating a String. 
 ```graphql
 gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV2(input:{ownerId:\"U_kgDOBTAVOg\",title:\"TF-Project\"}){projectV2{id}}}'
 ```
