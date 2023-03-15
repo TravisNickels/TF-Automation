@@ -116,6 +116,7 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ user(lo
 
 
 ## Links
+- https://github.com/octokit/octokit.graphql.net
 - https://github.com/boblangley/tf-automation
 - https://cli.github.com/manual/gh_api
 - https://devopsjournal.io/blog/2022/11/28/github-graphql-queries
