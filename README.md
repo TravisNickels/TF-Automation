@@ -1,6 +1,32 @@
 # TF-Automation
 
-## Authentication
+Just a test repo for Task force project board creation
+
+> **Note**
+> Make sure to create an `error` queue and a queue that is the name of your AzureWebJobsStorage inside of your AzureWebJobsServiceBus
+
+**Get asb-transport CLI**
+```ps
+dotnet tool install -g NServiceBus.Transport.AzureServiceBus.CommandLine
+```
+
+**Create the endpoint queue**
+
+> **Note**
+> Make sure to use the `-c` option if you want to override or do not have the `AzureServiceBus_ConnectionString` environment variable set.
+
+```shell
+asb-transport endpoint create <queue name>
+```
+
+**Subscribe to events**
+```shell
+asb-transport endpoint subscribe <queue name> <eventtype>
+```
+
+***
+
+## Graphql Authentication
 
 Before running GitHub CLI commands, you must authenticate by running `gh auth login --scopes "project"`. If you only need to read, but not edit, projects, you can provide the `read:project` scope instead of `project`. For more information on command line authentication, see "[gh auth login](https://cli.github.com/manual/gh_auth_login)."
 
