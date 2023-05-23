@@ -140,6 +140,25 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ user(lo
 }
 ```
 
+## Get node_id for issue
+
+##### Powershell
+```graphql
+gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ repository(owner:\"TravisNickels\", name:\"TF-Automation\") { issue(number: 1) { id } } }'
+```
+##### Result
+```json
+{
+  "data": {
+    "repository": {
+      "issue": {
+        "id": "I_kwDOJJR3y85mmxkx"
+      }
+    }
+  }
+}
+```
+
 
 ## Links
 - https://github.com/octokit/octokit.graphql.net
