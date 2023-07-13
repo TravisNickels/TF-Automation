@@ -10,6 +10,7 @@ on:
       - opened
       - reopened
       - transferred
+      - edited
   pull_request:
     types:
       - opened
@@ -30,3 +31,18 @@ jobs:
           # to the issue
           project-url: https://github.com/users/TravisNickels/projects/170
           github-token: ${{ secrets.TN_PAT }}
+  check-status:
+    name: Check status on issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["bug"]
+            })
