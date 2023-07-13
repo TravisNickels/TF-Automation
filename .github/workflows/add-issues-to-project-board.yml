@@ -29,4 +29,4 @@ jobs:
           # You can target a repository in a different organization
           # to the issue
           project-url: https://github.com/users/TravisNickels/projects/170
-          github-token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
