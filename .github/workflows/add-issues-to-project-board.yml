@@ -28,5 +28,5 @@ jobs:
         with:
           # You can target a repository in a different organization
           # to the issue
-          project-url: https://github.com/users/TravisNickels/projects/42
+          project-url: https://github.com/users/TravisNickels/projects/169
           github-token: ${{ secrets.GITHUB_TOKEN }}
