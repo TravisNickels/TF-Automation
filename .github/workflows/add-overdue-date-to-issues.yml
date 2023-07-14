@@ -1,0 +1,90 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Change a custom feild in an issue
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check-status:
+    name: Check status on issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const query = `query($owner:String!, $projectNum:Number!) {
+              user(login:$owner) { items(first: 100) 
+                { nodes { id fieldValues(first: 100) {
+                    nodes {
+                      ... on ProjectV2ItemFieldRepositoryValue {
+                        repository {
+                          id
+                          url
+                        }
+                      }
+                      ... on ProjectV2ItemFieldDateValue { 
+                        field {
+                          ... on ProjectV2Field {
+                            name
+                          }
+                        }
+                        date
+                      }
+                      ... on ProjectV2ItemFieldSingleSelectValue {
+                        field {
+                          ... on ProjectV2SingleSelectField {
+                            name
+                          }
+                        }
+                        name
+                        id
+                      }
+                      ... on ProjectV2ItemFieldLabelValue {
+                        labels(first: 20) {
+                          nodes {
+                            id
+                            name
+                          }
+                        }
+                      }
+                      ... on ProjectV2ItemFieldTextValue {
+                        text
+                        id
+                        updatedAt
+                        creator {
+                          url
+                        }
+                      }
+                      ... on ProjectV2ItemFieldMilestoneValue {
+                        milestone {
+                          id
+                        }
+                      }
+                    }
+                    totalCount
+                  }  } } }
+              }
+            } `;
+            const variables = {
+              owner: context.repo.owner,
+              projectNum: 170,
+            }
+            const result = await github.graphql(query, variables)
+            
+            
+            
+            
+            
+            
+            //for (const node of result.repository.issues.nodes) {
+            //  console.log("Node Id: " + node.id)
+            //}
+            //console.log(result)
+            //const currentDateTime = new Date();
+            //console.log('Current DateTime:', currentDateTime.toISOString());
