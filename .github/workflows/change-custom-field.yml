@@ -36,3 +36,5 @@ jobs:
               console.log("Node Id: " + node.id)
             }
             console.log(result)
+            const currentDateTime = new Date();
+            console.log('Current DateTime:', currentDateTime.toISOString());
