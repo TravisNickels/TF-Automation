@@ -75,7 +75,7 @@ jobs:
             for (const projectItem of result.user.projectV2.items.nodes){
               console.log("projectItem ID: " + projectItem.id)
               for (const fieldValue of projectItem.fieldValues.nodes) {
-                console.log("fieldValue: " + fieldValue)
+                console.log("fieldValue field: " + fieldValue.field)
                 console.log("fieldValue ID: " + fieldValue.id)
                 console.log("fieldValue createdAt: " + fieldValue.createdAt)
                 console.log("fieldValue text: " + fieldValue.text)
