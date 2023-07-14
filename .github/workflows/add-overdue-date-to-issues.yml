@@ -67,10 +67,10 @@ jobs:
             const result = await github.graphql(query, variables)
             console.log("result: " + result)
 
-            const OverdueOnDate = ''
-            const isSquadWork = false
-            const isOverdueOnSet = false
-            const createdAt = ''
+            var OverdueOnDate = ''
+            var isSquadWork = false
+            var isOverdueOnSet = false
+            var createdAt = ''
             
             for (const projectItem of result.user.projectV2.items.nodes){
               console.log("projectItem ID: " + projectItem.id)
@@ -92,11 +92,11 @@ jobs:
                 }                  
               }
               if (isSquadWork && !isOverdueOnSet){
-                const createdAtString = createdAt
-                const createdAtDate = new Date(createdAtString)
+                var createdAtString = createdAt
+                var createdAtDate = new Date(createdAtString)
                 createdAtDate.setDate(createdAtDate.getDate() + 10)
 
-                const OverdueOnString = createdAtDate.toISOString().split('T')[0]
+                var OverdueOnString = createdAtDate.toISOString().split('T')[0]
                 console.log('New OverdueOn: ' + OverdueOnString)
               }
             }
