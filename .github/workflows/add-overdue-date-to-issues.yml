@@ -85,7 +85,7 @@ jobs:
                     console.log("--Found the Status field--")
                     console.log("Status field value: " + fieldValue.name)
                     if (fieldValue.name === 'Squad Work'){
-                      console.log("--Found the Status value "Squad work"--")
+                      console.log("--Found the Status value ---- SQUAD WORK --")
                       console.log("Status value: " + fieldValue.name)
                       isSquadWork = true
                     }
