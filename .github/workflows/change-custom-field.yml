@@ -33,8 +33,6 @@ jobs:
             }
             const result = await github.graphql(query, variables)
             for (const node of result.repository.issues.nodes) {
-              if (node.id === "I_kwDOJJR3y85rgpbs" ){
-                console.log("Node Id: " + node.id)
-              }
+              console.log("Node Id: " + node.id)
             }
             console.log(result)
