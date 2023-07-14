@@ -17,6 +17,7 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.TN_PAT }}
           script: |
             const query = `query($owner:String!, $projectNum:Int!) {
               user(login:$owner) { 
