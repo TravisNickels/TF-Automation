@@ -82,12 +82,14 @@ jobs:
             
             for (const projectItem of result.user.projectV2.items.nodes){
               console.log("projectItem ID: " + projectItem.id)
-            //  for (const fieldValue of projectItem.fieldValues.nodes) {
-            //    console.log("fieldValue ID: " + fieldValue.id)
-            //    if (fieldValue.field !== undefined){
-            //      if(fieldValue.field.name === 'Overdue on')
-            //        console.log("Overdue on date: " + fieldValue.date)
-            //  }
+              for (const fieldValue of projectItem.fieldValues.nodes) {
+                console.log("fieldValue ID: " + fieldValue.id)
+                if (fieldValue.field !== undefined){
+                  if(fieldValue.field.name === 'Overdue on'){
+                    console.log("Overdue on date: " + fieldValue.date)
+                  }
+                }
+              }
             }
             
             
