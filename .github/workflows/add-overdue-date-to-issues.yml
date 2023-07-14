@@ -21,56 +21,43 @@ jobs:
           script: |
             const query = `query($owner:String!, $projectNum:Int!) {
               user(login:$owner) { 
-                projectV2(number:$projectNum) { items(first: 100) 
-                { nodes { id fieldValues(first: 100) {
-                    nodes {
-                      ... on ProjectV2ItemFieldRepositoryValue {
-                        repository {
-                          id
-                          url
-                        }
-                      }
-                      ... on ProjectV2ItemFieldDateValue { 
-                        field {
-                          ... on ProjectV2Field {
-                            name
-                          }
-                        }
-                        date
-                      }
-                      ... on ProjectV2ItemFieldSingleSelectValue {
-                        field {
-                          ... on ProjectV2SingleSelectField {
-                            name
-                          }
-                        }
-                        name
-                        id
-                      }
-                      ... on ProjectV2ItemFieldLabelValue {
-                        labels(first: 20) {
-                          nodes {
+                projectV2(number:$projectNum) { 
+                  items(first: 100) {
+                    nodes { 
+                      id 
+                      fieldValues(first: 100) {
+                        nodes {
+                          ... on ProjectV2ItemFieldTextValue {
+                            text
                             id
+                            updatedAt
+                            createdAt
+                            creator {
+                              url
+                            }
+                          }
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            field {
+                              ... on ProjectV2SingleSelectField {
+                                name
+                              }
+                            }
                             name
+                            id
+                          }
+                          ... on ProjectV2ItemFieldDateValue { 
+                            field {
+                              ... on ProjectV2Field {
+                                name
+                              }
+                            }
+                            date
                           }
                         }
-                      }
-                      ... on ProjectV2ItemFieldTextValue {
-                        text
-                        id
-                        updatedAt
-                        creator {
-                          url
-                        }
-                      }
-                      ... on ProjectV2ItemFieldMilestoneValue {
-                        milestone {
-                          id
-                        }
-                      }
-                    }
-                    totalCount
-                  }  } } }
+                      }  
+                    } 
+                  } 
+                }
               }
             } `;
             const variables = {
@@ -79,16 +66,38 @@ jobs:
             }
             const result = await github.graphql(query, variables)
             console.log("result: " + result)
+
+            const OverdueOnDate = ''
+            const isSquadWork = false
+            const isOverdueOnSet = false
+            const createdAt = ''
             
             for (const projectItem of result.user.projectV2.items.nodes){
               console.log("projectItem ID: " + projectItem.id)
               for (const fieldValue of projectItem.fieldValues.nodes) {
                 console.log("fieldValue ID: " + fieldValue.id)
-                //if (fieldValue.field !== undefined){
-                  if(fieldValue.field.name === 'Overdue on'){
-                    console.log("Overdue on date: " + fieldValue.date)
+                if (fieldValue.field !== undefined){
+                  if (fieldValue.field.name === 'Status'){
+                    if (fieldValue.name === 'Squad Work'){
+                        console.log("Status: " + fieldValue.name)
+                        isSquadWork = true
+                    }
+                  } 
+                  if (fieldValue.name === 'Overdue On'){
+                    console.log("Overdue date: " + fieldValue.date)
+                    isOverdueOnSet = true
                   }
-                //}
+                } else {
+                  createdAt = fieldValue.createdAt
+                }                  
+              }
+              if (isSquadWork && !isOverdueOnSet){
+                const createdAtString = createdAt
+                const createdAtDate = new Date(createdAtString)
+                createdAtDate.setDate(createdAtDate.getDate() + 10)
+
+                const OverdueOnString = createdAtDate.toISOString().split('T')[0]
+                console.log('New OverdueOn: ' + OverdueOnString)
               }
             }
             
