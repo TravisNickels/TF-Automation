@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Change a custom feild in an issue
+name: Add the Overdue On date to issues
 
 # Controls when the workflow will run
 on:
