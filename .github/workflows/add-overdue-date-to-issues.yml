@@ -80,6 +80,7 @@ jobs:
                 console.log("fieldValue createdAt: " + fieldValue.createdAt)
                 console.log("fieldValue text: " + fieldValue.text)
                 if (fieldValue.field !== undefined){
+                  console.log("field name: " + fieldValue.field.name)
                   if (fieldValue.field.name === 'Status'){
                     if (fieldValue.name === 'Squad Work'){
                         console.log("Status: " + fieldValue.name)
