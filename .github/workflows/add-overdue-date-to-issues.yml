@@ -75,7 +75,6 @@ jobs:
             for (const projectItem of result.user.projectV2.items.nodes){
               console.log("projectItem ID: " + projectItem.id)
               for (const fieldValue of projectItem.fieldValues.nodes) {
-                console.log("fieldValue ID: " + fieldValue.id)
                 if (fieldValue.field !== undefined){
                   if (fieldValue.field.name === 'Status'){
                     if (fieldValue.name === 'Squad Work'){
@@ -88,6 +87,7 @@ jobs:
                     isOverdueOnSet = true
                   }
                 } else {
+                  console.log("fieldValue ID: " + fieldValue.id)
                   createdAt = fieldValue.createdAt
                 }                  
               }
