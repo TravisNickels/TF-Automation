@@ -82,9 +82,12 @@ jobs:
                 if (fieldValue.field !== undefined){
                   console.log("field name: " + fieldValue.field.name)
                   if (fieldValue.field.name === 'Status'){
+                    console.log("--Found the Status field--")
+                    console.log("Status field value: " + fieldValue.name)
                     if (fieldValue.name === 'Squad Work'){
-                        console.log("Status: " + fieldValue.name)
-                        isSquadWork = true
+                      console.log("--Found the Status value "Squad work"--")
+                      console.log("Status value: " + fieldValue.name)
+                      isSquadWork = true
                     }
                   } 
                   if (fieldValue.name === 'Overdue On'){
