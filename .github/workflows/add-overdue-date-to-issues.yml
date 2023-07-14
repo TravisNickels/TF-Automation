@@ -20,7 +20,7 @@ jobs:
           script: |
             const query = `query($owner:String!, $projectNum:Int!) {
               user(login:$owner) { 
-                projectV2(number: $projectNum) { items(first: 100) 
+                projectV2(number:$projectNum) { items(first: 100) 
                 { nodes { id fieldValues(first: 100) {
                     nodes {
                       ... on ProjectV2ItemFieldRepositoryValue {
