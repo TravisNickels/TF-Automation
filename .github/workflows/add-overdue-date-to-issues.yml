@@ -19,106 +19,104 @@ jobs:
         with:
           github-token: ${{ secrets.TN_PAT }}
           script: |
-            const query = `query($owner: String!, $projectNum: Int!){ 
-              user(login:$owner) { 
-                projectV2(number:$projectNum) { 
-                  id
-                  fields(first: 100){
-                    nodes {
-                      ... on ProjectV2Field {
-                        name
-                        id
-                      }          
-                    }
-                  }
-                  items(first: 100) {
-                    nodes { 
-                      id 
-                      fieldValues(first: 100) {
-                        nodes {
-                          ... on ProjectV2ItemFieldTextValue {
-                            text
-                            id
-                            updatedAt
-                            createdAt
-                            creator {
-                              url
-                            }
-                          }
-                          ... on ProjectV2ItemFieldSingleSelectValue {
-                            field {
-                              ... on ProjectV2SingleSelectField {
-                                name
-                              }
-                            }
-                            name
-                            id
-                          }
-                          ... on ProjectV2ItemFieldDateValue { 
-                            field {
-                              ... on ProjectV2Field {
-                                name
-                              }
-                            }
-                            date
-                            id
-                          }
-                        }
-                      }  
-                    } 
-                  } 
-                }
-              }
-            } `;
-            const variables = {
-              owner: context.repo.owner,
-              projectNum: 170,
-            }
-            const result = await github.graphql(query, variables)
-            console.log("result: " + result)
-
-            var OverdueOnDate = ''
-            var projectId = ''
-            var itemId = ''
-            var fieldId = ''
-            var isSquadWork = false
-            var isOverdueOnSet = false
-            var createdAt = ''
-            var overdueOnFieldId = getProjectV2FieldId("Overdue on")
+            const queryResult = await getProjectV2ItemsAndFields(170);
+            const overdueOnFieldId = getProjectV2FieldId('Overdue on');
+            let isSquadWork = false;
+            let isOverdueOnSet = false;
+            let updatedAt = '';
             
-            for (const projectItem of result.user.projectV2.items.nodes){
+            for (const projectItem of queryResult.user.projectV2.items.nodes){
               for (const fieldValue of projectItem.fieldValues.nodes) {
                 if (fieldValue.field !== undefined){
                   if (fieldValue.field.name === 'Status'){
-                    if (fieldValue.name === 'Squad Work'){                      
+                    if (fieldValue.name === 'Squad Work'){
                       isSquadWork = true
                     }
-                  } 
-                  if (fieldValue.name === 'Overdue on'){
+                  }
+                  else if (fieldValue.field.name === 'Overdue on'){
                     isOverdueOnSet = true
                   }
-                } else {
-                  createdAt = fieldValue.createdAt
                 }
               }
               if (isSquadWork && !isOverdueOnSet){
-                var createdAtString = createdAt
-                var createdAtDateTime = new Date(createdAtString)
-                var createAtDateString = createdAtDateTime.toISOString().split('T')[0]
-                var OverdueOnDate = new Date(createAtDateString)
+                let updatedAtDateTime = new Date(projectItem.updatedAt)
+                let createAtDateString = updatedAtDateTime.toISOString().split('T')[0]
+                let OverdueOnDate = new Date(createAtDateString)
                 OverdueOnDate.setDate(OverdueOnDate.getDate() + 10)
-                
-                projectId = result.user.projectV2.id
-                console.log('Project ID: ' + projectId)
-                itemId = projectItem.id
-                console.log('Item ID: ' + itemId)
-                console.log('Overdue On Field ID: ' + overdueOnFieldId)
-                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
+            
+                const projectId = queryResult.user.projectV2.id
+                const projectTitle = queryResult.user.projectV2.title
+            
                 updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
+                console.log('Project Title: ' + projectTitle)
+                console.log('Project ID: ' + projectId)
+                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
+                console.log('Overdue On Field ID: ' + overdueOnFieldId)
               }
             }
             
-
+            async function getProjectV2ItemsAndFields(projectNumber){
+              const query = `query($owner: String!, $projectNum: Int!){
+                user(login:$owner) {
+                  projectV2(number:$projectNum) {
+                    id
+                    title
+                    fields(first: 100){
+                      nodes {
+                        ... on ProjectV2Field {
+                          name
+                          id
+                        }
+                      }
+                    }
+                    items(first: 100) {
+                      nodes {
+                        id
+                        updatedAt
+                        fieldValues(first: 100) {
+                          nodes {
+                            ... on ProjectV2ItemFieldTextValue {
+                              field {
+                                ... on ProjectV2Field {
+                                  name
+                                }
+                              }
+                              text
+                              id
+                            }
+                            ... on ProjectV2ItemFieldSingleSelectValue {
+                              field {
+                                ... on ProjectV2SingleSelectField {
+                                  name
+                                }
+                              }
+                              name
+                              id
+                            }
+                            ... on ProjectV2ItemFieldDateValue {
+                              field {
+                                ... on ProjectV2Field {
+                                  name
+                                }
+                              }
+                              date
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              } `;
+              const variables = {
+                owner: context.repo.owner,
+                projectNum: projectNumber,
+              }
+            
+              return await github.graphql(query, variables)
+            }
+            
             async function updateOverdueOnDate(projectId, itemId, fieldId, value){
               const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
                 updateProjectV2ItemFieldValue(input: {
@@ -129,36 +127,34 @@ jobs:
                 }){
                   projectV2Item {
                     id
+                    fieldValueByName(name: "Title"){
+                      ... on ProjectV2ItemFieldTextValue {
+                        text
+                      }
+                    }
                   }
                 }
               }`;
-              const variables2 = {
+              const variables = {
                 projectId: projectId,
                 itemId: itemId,
                 fieldId: fieldId,
                 value: value
               }
-
-              const result = await github.graphql(mutation, variables2)
-              console.log("result: " + result.updateProjectV2ItemFieldValue.projectV2Item.id)
+            
+              const data = await github.graphql(mutation, variables)
+              console.log("-- Updated project item --")
+              console.log("Title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
+              console.log("Item ID: " + itemId)
+            
+              return data 
             }
-
+            
             function getProjectV2FieldId(name) {
-              for (const field of result.user.projectV2.fields.nodes){             
+              for (const field of queryResult.user.projectV2.fields.nodes){
                 if (field.name === name){
-                  console.log("Field ID: " + field.id)
-                  console.log("Field Name: " + field.name)
-                  console.log("Name: " + name)
-                  overdueOnFieldId = field.id
-                  return overdueOnFieldId
+                  return field.id
                 }
               }
             }
-            
-            
-            //for (const node of result.repository.issues.nodes) {
-            //  console.log("Node Id: " + node.id)
-            //}
-            //console.log(result)
-            //const currentDateTime = new Date();
-            //console.log('Current DateTime:', currentDateTime.toISOString());
+          
