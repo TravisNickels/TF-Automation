@@ -48,7 +48,10 @@ jobs:
                 const projectTitle = queryResult.user.projectV2.title
                 const itemId = projectItem.id
             
-                updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
+                const data = updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
+                console.log("-- Updated project item --")
+                console.log("Project item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
+                console.log("Item ID: " + itemId)
                 console.log('Project Title: ' + projectTitle)
                 console.log('Project ID: ' + projectId)
                 console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
@@ -144,9 +147,9 @@ jobs:
               }
             
               const data = await github.graphql(mutation, variables)
-              console.log("-- Updated project item --")
-              console.log("Title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
-              console.log("Item ID: " + itemId)
+              //console.log("-- Updated project item --")
+              //console.log("Title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
+              //console.log("Item ID: " + itemId)
             
               return data;
             }
