@@ -26,7 +26,7 @@ asb-transport endpoint subscribe <queue name> <eventtype>
 
 ***
 
-## Graphql Authentication 
+## Graphql Authentication
 
 Before running GitHub CLI commands, you must authenticate by running `gh auth login --scopes "project"`. If you only need to read, but not edit, projects, you can provide the `read:project` scope instead of `project`. For more information on command line authentication, see "[gh auth login](https://cli.github.com/manual/gh_auth_login)."
 
