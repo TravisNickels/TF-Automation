@@ -112,7 +112,7 @@ jobs:
                 console.log('Project ID: ' + projectId)
                 itemId = projectItem.id
                 console.log('Item ID: ' + itemId)
-                overdueOnFieldId = getProjectv2FieldId("Overdue On")
+                overdueOnFieldId = getProjectv2FieldId("Overdue on")
                 console.log('Overdue On Field ID: ' + overdueOnFieldId)
                 console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
                 updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
@@ -139,9 +139,7 @@ jobs:
             }
 
             function getProjectv2FieldId(name) {
-              for (const field of result.user.projectV2.fields.nodes){  
-                console.log("Field Name: " + field.name)
-                console.log("Name: " + name)              
+              for (const field of result.user.projectV2.fields.nodes){             
                 if (field.name === name){
                   console.log("Field ID: " + field.id)
                   console.log("Field Name: " + field.name)
