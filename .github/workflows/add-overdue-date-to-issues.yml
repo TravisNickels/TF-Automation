@@ -132,14 +132,14 @@ jobs:
                   }
                 }
               }`;
-              const variables = {
+              const variables2 = {
                 projectId: projectId,
                 itemId: itemId,
                 fieldId: fieldId,
                 value: value
               }
 
-              const result = await github.graphql(query, variables)
+              const result = await github.graphql(query, variables2)
               console.log("result: " + result.projectV2Item.id)
             }
 
