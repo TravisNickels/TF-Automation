@@ -48,7 +48,7 @@ jobs:
                 const projectTitle = queryResult.user.projectV2.title
                 const itemId = projectItem.id
             
-                const data = updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
+                const data = await updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
                 console.log("-- Updated project item --")
                 console.log("Project item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
                 console.log("Item ID: " + itemId)
