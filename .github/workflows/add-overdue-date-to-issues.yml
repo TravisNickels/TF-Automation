@@ -24,7 +24,7 @@ jobs:
             let isSquadWork = false;
             let isOverdueOnSet = false;
             let updatedAt = '';
-
+            
             for (const projectItem of queryResult.user.projectV2.items.nodes){
               for (const fieldValue of projectItem.fieldValues.nodes) {
                 if (fieldValue.field !== undefined){
@@ -43,11 +43,11 @@ jobs:
                 let createAtDateString = updatedAtDateTime.toISOString().split('T')[0]
                 let OverdueOnDate = new Date(createAtDateString)
                 OverdueOnDate.setDate(OverdueOnDate.getDate() + 10)
-
+            
                 const projectId = queryResult.user.projectV2.id
                 const projectTitle = queryResult.user.projectV2.title
                 const itemId = projectItem.id
-
+            
                 updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
                 console.log('Project Title: ' + projectTitle)
                 console.log('Project ID: ' + projectId)
@@ -55,7 +55,7 @@ jobs:
                 console.log('Overdue On Field ID: ' + overdueOnFieldId)
               }
             }
-
+            
             async function getProjectV2ItemsAndFields(projectNumber){
               const query = `query($owner: String!, $projectNum: Int!){
                 user(login:$owner) {
@@ -114,10 +114,10 @@ jobs:
                 owner: context.repo.owner,
                 projectNum: projectNumber,
               }
-
+            
               return await github.graphql(query, variables)
             }
-
+            
             async function updateOverdueOnDate(projectId, itemId, fieldId, value){
               const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
                 updateProjectV2ItemFieldValue(input: {
@@ -142,15 +142,15 @@ jobs:
                 fieldId: fieldId,
                 value: value
               }
-
+            
               const data = await github.graphql(mutation, variables)
               console.log("-- Updated project item --")
               console.log("Title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
               console.log("Item ID: " + itemId)
-
-              return data 
+            
+              return data;
             }
-
+            
             function getProjectV2FieldId(name) {
               for (const field of queryResult.user.projectV2.fields.nodes){
                 if (field.name === name){
@@ -158,4 +158,3 @@ jobs:
                 }
               }
             }
-          
