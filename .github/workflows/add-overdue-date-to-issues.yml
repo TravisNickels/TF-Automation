@@ -146,12 +146,7 @@ jobs:
                 value: value
               }
             
-              const data = await github.graphql(mutation, variables)
-              //console.log("-- Updated project item --")
-              //console.log("Title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
-              //console.log("Item ID: " + itemId)
-            
-              return data;
+              return await github.graphql(mutation, variables)
             }
             
             function getProjectV2FieldId(name) {
