@@ -84,7 +84,7 @@ jobs:
             var isSquadWork = false
             var isOverdueOnSet = false
             var createdAt = ''
-            var overdueOnFieldId = getProjectv2FieldId("Overdue on")
+            var overdueOnFieldId = getProjectV2FieldId("Overdue on")
             
             for (const projectItem of result.user.projectV2.items.nodes){
               for (const fieldValue of projectItem.fieldValues.nodes) {
@@ -139,11 +139,11 @@ jobs:
                 value: value
               }
 
-              const result = await github.graphql(query, variables2)
+              const result = await github.graphql(mutation, variables2)
               console.log("result: " + result.projectV2Item.id)
             }
 
-            function getProjectv2FieldId(name) {
+            function getProjectV2FieldId(name) {
               for (const field of result.user.projectV2.fields.nodes){             
                 if (field.name === name){
                   console.log("Field ID: " + field.id)
