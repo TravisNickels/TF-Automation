@@ -19,20 +19,21 @@ jobs:
         with:
           github-token: ${{ secrets.TN_PAT }}
           script: |
-            const query = `query($owner:String!, $projectNum:Int!) {
+            const query = `query($owner: String!, $projectNum: Int!){ 
               user(login:$owner) { 
                 projectV2(number:$projectNum) { 
+                  id
+                  fields(first: 100){
+                    nodes {
+                      ... on ProjectV2Field {
+                        name
+                        id
+                      }          
+                    }
+                  }
                   items(first: 100) {
                     nodes { 
-                      id
-                      fields(first: 100){
-                        nodes {
-                          ... on ProjectV2Field {
-                            name
-                            id
-                          } 
-                        }
-                      }
+                      id 
                       fieldValues(first: 100) {
                         nodes {
                           ... on ProjectV2ItemFieldTextValue {
@@ -60,6 +61,7 @@ jobs:
                               }
                             }
                             date
+                            id
                           }
                         }
                       }  
@@ -67,7 +69,7 @@ jobs:
                   } 
                 }
               }
-            }`;
+            } `;
             const variables = {
               owner: context.repo.owner,
               projectNum: 170,
