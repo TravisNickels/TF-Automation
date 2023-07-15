@@ -49,11 +49,11 @@ jobs:
             
                 const data = await updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
                 console.log("-- Updated project item --")
-                console.log("Project item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
+                console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text)
                 console.log("Item ID: " + itemId)
                 console.log('Project Title: ' + projectTitle)
                 console.log('Project ID: ' + projectId)
-                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
+                console.log('OverdueOn date: ' + OverdueOnDate.toISOString())
                 console.log('Overdue On Field ID: ' + overdueOnFieldId)
               }
             }
