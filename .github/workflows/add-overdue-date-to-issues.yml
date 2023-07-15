@@ -140,7 +140,7 @@ jobs:
               }
 
               const result = await github.graphql(mutation, variables2)
-              console.log("result: " + result.projectV2Item.id)
+              console.log("result: " + result.updateProjectV2ItemFieldValue.projectV2Item.id)
             }
 
             function getProjectV2FieldId(name) {
