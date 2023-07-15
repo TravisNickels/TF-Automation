@@ -104,7 +104,7 @@ jobs:
               if (isSquadWork && !isOverdueOnSet){
                 var createdAtString = createdAt
                 var createdAtDateTime = new Date(createdAtString)
-                var createdAtDateString = createdAtDateTime.toISOString().split('T')[0]
+                var createAtDateString = createdAtDateTime.toISOString().split('T')[0]
                 var OverdueOnDate = new Date(createAtDateString)
                 OverdueOnDate.setDate(OverdueOnDate.getDate() + 10)
                 
