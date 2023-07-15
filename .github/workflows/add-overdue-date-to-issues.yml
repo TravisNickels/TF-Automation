@@ -110,40 +110,40 @@ jobs:
                 console.log('Project ID: ' + projectId)
                 itemId = projectItem.id
                 console.log('Item ID: ' + itemId)
-                overdueOnFieldId = getProjectv2FieldId("Overdue On")
-                console.log('Overdue On Field ID: ' + overdueOnFieldId)
+                //overdueOnFieldId = getProjectv2FieldId("Overdue On")
+                //console.log('Overdue On Field ID: ' + overdueOnFieldId)
                 console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
-                updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
+                //updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
               }
             }
             
 
-            async function updateOverdueOnDate(projectId, itemId, fieldId, value){
-              const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
-                updateProjectV2ItemFieldValue(input: {
-                  projectId: $projectId
-                  itemId: $itemId
-                  fieldId: $fieldId
-                  value: {date: $value}
-                }){
-                  projectV2Item {
-                    id
-                  }
-                }
-              }`;
+            //async function updateOverdueOnDate(projectId, itemId, fieldId, value){
+            //  const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
+            //    updateProjectV2ItemFieldValue(input: {
+            //      projectId: $projectId
+            //      itemId: $itemId
+            //      fieldId: $fieldId
+            //      value: {date: $value}
+            //    }){
+            //      projectV2Item {
+            //        id
+            //      }
+            //    }
+            //  }`;
 
-              const result = await github.graphql(query, variables)
-              console.log("result: " + result.projectV2Item.id)
-            }
+            //  const result = await github.graphql(query, variables)
+            //  console.log("result: " + result.projectV2Item.id)
+            //}
 
-            function getProjectv2FieldId(name) {
-              for (const field of result.user.projectV2.fields.nodes){
-                if (field.name === name){
-                  overdueOnFieldId = field.id
-                  return overdueOnFieldId
-                }
-              }
-            }
+            //function getProjectv2FieldId(name) {
+            //  for (const field of result.user.projectV2.fields.nodes){
+            //    if (field.name === name){
+            //      overdueOnFieldId = field.id
+            //      return overdueOnFieldId
+            //    }
+            //  }
+            //}
             
             
             //for (const node of result.repository.issues.nodes) {
