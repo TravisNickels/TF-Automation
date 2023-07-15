@@ -139,11 +139,11 @@ jobs:
             }
 
             function getProjectv2FieldId(name) {
-              for (const field of result.user.projectV2.fields.nodes){
-                console.log("Field ID: " + field.id)
-                console.log("Field Name: " + field.name)
-                console.log("Name: " + name)
+              for (const field of result.user.projectV2.fields.nodes){                
                 if (field.name === name){
+                  console.log("Field ID: " + field.id)
+                  console.log("Field Name: " + field.name)
+                  console.log("Name: " + name)
                   overdueOnFieldId = field.id
                   return overdueOnFieldId
                 }
