@@ -24,7 +24,15 @@ jobs:
                 projectV2(number:$projectNum) { 
                   items(first: 100) {
                     nodes { 
-                      id 
+                      id
+                      fields(first: 100){
+                        nodes {
+                          ... on ProjectV2Field {
+                            name
+                            id
+                          } 
+                        }
+                      }
                       fieldValues(first: 100) {
                         nodes {
                           ... on ProjectV2ItemFieldTextValue {
@@ -59,7 +67,7 @@ jobs:
                   } 
                 }
               }
-            } `;
+            }`;
             const variables = {
               owner: context.repo.owner,
               projectNum: 170,
@@ -68,46 +76,75 @@ jobs:
             console.log("result: " + result)
 
             var OverdueOnDate = ''
+            var projectId = ''
+            var itemId = ''
+            var fieldId = ''
             var isSquadWork = false
             var isOverdueOnSet = false
             var createdAt = ''
+            var overdueOnFieldId = ''
             
             for (const projectItem of result.user.projectV2.items.nodes){
-              console.log("projectItem ID: " + projectItem.id)
               for (const fieldValue of projectItem.fieldValues.nodes) {
-                console.log("fieldValue field: " + fieldValue.field)
-                console.log("fieldValue ID: " + fieldValue.id)
-                console.log("fieldValue createdAt: " + fieldValue.createdAt)
-                console.log("fieldValue text: " + fieldValue.text)
                 if (fieldValue.field !== undefined){
-                  console.log("field name: " + fieldValue.field.name)
                   if (fieldValue.field.name === 'Status'){
-                    console.log("--Found the Status field--")
-                    console.log("Status field value: " + fieldValue.name)
-                    if (fieldValue.name === 'Squad Work'){
-                      console.log("--Found the Status value ---- SQUAD WORK --")
-                      console.log("Status value: " + fieldValue.name)
+                    if (fieldValue.name === 'Squad Work'){                      
                       isSquadWork = true
                     }
                   } 
                   if (fieldValue.name === 'Overdue On'){
-                    console.log("Overdue date: " + fieldValue.date)
                     isOverdueOnSet = true
                   }
                 } else {
                   createdAt = fieldValue.createdAt
-                }                  
+                }
               }
               if (isSquadWork && !isOverdueOnSet){
                 var createdAtString = createdAt
-                var createdAtDate = new Date(createdAtString)
-                createdAtDate.setDate(createdAtDate.getDate() + 10)
+                var createdAtDateTime = new Date(createdAtString)
+                var createdAtDateString = createdAtDateTime.toISOString().split('T')[0]
+                var OverdueOnDate = new Date(createAtDateString)
+                OverdueOnDate.setDate(OverdueOnDate.getDate() + 10)
 
-                var OverdueOnString = createdAtDate.toISOString().split('T')[0]
-                console.log('New OverdueOn: ' + OverdueOnString)
+                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
+                
+                projectId = result.user.projectV2.id
+                console.log('Project ID: ' + projectId)
+                itemId = projectItem.id
+                console.log('Item ID: ' + itemId)
+                overdueOnFieldId = getProjectv2FieldId("Overdue On")
+                console.log('Overdue On Field ID: ' + overdueOnFieldId)
+                updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate)
               }
             }
             
+
+            function updateOverdueOnDate(projectId, itemId, fieldId, value){
+              const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: $projectId
+                  itemId: $itemId
+                  fieldId: $fieldId
+                  value: {date: $value}
+                }){
+                  projectV2Item {
+                    id
+                  }
+                }
+              }`;
+
+              const result = await github.graphql(query, variables)
+              console.log("result: " + result.projectV2Item.id)
+            }
+
+            function getProjectv2FieldId(name) {
+              for (const field of result.user.projectV2.fields.nodes){
+                if (field.name === name){
+                  overdueOnFieldId = field.id
+                  return overdueOnFieldId
+                }
+              }
+            }
             
             
             //for (const node of result.repository.issues.nodes) {
