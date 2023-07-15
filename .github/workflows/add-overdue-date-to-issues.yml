@@ -105,8 +105,6 @@ jobs:
                 var createdAtDateString = createdAtDateTime.toISOString().split('T')[0]
                 var OverdueOnDate = new Date(createAtDateString)
                 OverdueOnDate.setDate(OverdueOnDate.getDate() + 10)
-
-                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
                 
                 projectId = result.user.projectV2.id
                 console.log('Project ID: ' + projectId)
@@ -114,12 +112,13 @@ jobs:
                 console.log('Item ID: ' + itemId)
                 overdueOnFieldId = getProjectv2FieldId("Overdue On")
                 console.log('Overdue On Field ID: ' + overdueOnFieldId)
-                updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate)
+                console.log('New OverdueOn: ' + OverdueOnDate.toISOString())
+                updateOverdueOnDate(projectId, itemId, overdueOnFieldId, OverdueOnDate.toISOString())
               }
             }
             
 
-            function updateOverdueOnDate(projectId, itemId, fieldId, value){
+            async function updateOverdueOnDate(projectId, itemId, fieldId, value){
               const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
                 updateProjectV2ItemFieldValue(input: {
                   projectId: $projectId
