@@ -94,7 +94,7 @@ jobs:
                       isSquadWork = true
                     }
                   } 
-                  if (fieldValue.name === 'Overdue On'){
+                  if (fieldValue.name === 'Overdue on'){
                     isOverdueOnSet = true
                   }
                 } else {
