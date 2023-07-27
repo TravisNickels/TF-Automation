@@ -4,7 +4,7 @@ module.exports = async ({github, context}) => {
   //console.log(github);
   //console.log(context);
 
-  const issueTitle = context.payload.issues.
+  const issueTitle = context.payload.issues.title;
 
   if (issueTitle.startsWith("Action items:"))
   {
