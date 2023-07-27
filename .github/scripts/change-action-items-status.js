@@ -2,19 +2,19 @@ module.exports = async ({github, context}) => {
 
   //const statusFieldId = getProjectV2FieldId('Status');
   //console.log(github);
-  console.log(context);
-  console.log(context.payload.issue.title);
+  //console.log(context);
+  //console.log(context.payload.issue.title);
   //console.log("context.payload: " + context.payload);
   //console.log("context.issue: " + context.issue);
   //console.log("context.issue.title: " + context.issue.title);
 
-  /* const issueTitle = context.issue.title;
+  const issueTitle = context.payload.issue.title;
 
   if (issueTitle.startsWith("Action items:"))
   {
     console.log("Found an action item");
   }
- */
+
   /* async function updateStatus(projectId, itemId, fieldId, value){
     const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
       updateProjectV2ItemFieldValue(input: {
