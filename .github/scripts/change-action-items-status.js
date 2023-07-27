@@ -1,6 +1,6 @@
 module.exports = async ({github, context}) => {
 
-  const statusFieldId = getProjectV2FieldId('Status');
+  //const statusFieldId = getProjectV2FieldId('Status');
   console.log(github);
   console.log(context);
 
@@ -32,13 +32,13 @@ module.exports = async ({github, context}) => {
     return await github.graphql(mutation, variables);
   } */
 
-  function getProjectV2FieldId(name) {
+  /* function getProjectV2FieldId(name) {
     for (const field of queryResult.user.projectV2.fields.nodes){
       if (field.name === name){
         return field.id;
       }
     }
-  }
+  } */
 
   return;
 }
