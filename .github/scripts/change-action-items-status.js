@@ -3,6 +3,7 @@ module.exports = async ({github, context}) => {
   //const statusFieldId = getProjectV2FieldId('Status');
   //console.log(github);
   console.log(context);
+  console.log(context.payload.issue.title);
   //console.log("context.payload: " + context.payload);
   //console.log("context.issue: " + context.issue);
   //console.log("context.issue.title: " + context.issue.title);
