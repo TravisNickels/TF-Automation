@@ -1,5 +1,7 @@
 module.exports = async ({github, context}) => {
 
+  console.log(context);
+
   const projectV2Data = await getProjectV2AndFields(170);
   const statusFieldId = getProjectV2FieldId('Status');
   const projectId = projectV2Data.user.projectV2.id;
@@ -56,7 +58,7 @@ module.exports = async ({github, context}) => {
   }
 
   async function updateStatus(projectId, itemId, fieldId, value){
-    const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
+    const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!){
       updateProjectV2ItemFieldValue(input: {
         projectId: $projectId
         itemId: $itemId
