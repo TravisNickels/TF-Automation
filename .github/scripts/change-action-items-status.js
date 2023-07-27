@@ -1,8 +1,15 @@
 module.exports = async ({github, context}) => {
 
   //const statusFieldId = getProjectV2FieldId('Status');
-  console.log(github);
-  console.log(context);
+  //console.log(github);
+  //console.log(context);
+
+  const issueTitle = context.payload.issues.
+
+  if (issueTitle.startsWith("Action items:"))
+  {
+    console.log("Found an action item");
+  }
 
   /* async function updateStatus(projectId, itemId, fieldId, value){
     const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
