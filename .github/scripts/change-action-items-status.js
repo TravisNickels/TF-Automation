@@ -44,6 +44,10 @@ module.exports = async ({github, context}) => {
                 name
                 id
               }
+              ... on ProjectV2SingleSelectField {
+                name
+                id
+              }
             }
           }
         }
