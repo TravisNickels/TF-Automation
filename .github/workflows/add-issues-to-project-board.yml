@@ -33,21 +33,21 @@ jobs:
           # to the issue
           project-url: https://github.com/users/TravisNickels/projects/170
           github-token: ${{ secrets.TN_PAT }}
-  #check-status:
-  #  name: Check status on issue
-  #  runs-on: ubuntu-latest
-  #  permissions:
-  #    issues: write
-  #  steps:
-  #    - uses: actions/github-script@v6
-  #      with:
-  #        script: |
-  #          github.rest.issues.addLabels({
-  #            issue_number: context.issue.number,
-  #            owner: context.repo.owner,
-  #            repo: context.repo.repo,
-  #            labels: ["bug"]
-  #          })
+  update-action-item-status:
+    name: Update the status of the action item issue to `Squad Work`
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.TN_PAT }}
+          script: |
+            const script = require('.github/scripts/change-action-items-status.js');
+            (async () => {
+              await script({github, context});
+            })();
   #check-status:
   #  name: Check status on issue
   #  runs-on: ubuntu-latest
