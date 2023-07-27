@@ -1,22 +1,36 @@
 module.exports = async ({github, context}) => {
 
-  const queryResult = await getProjectV2Fields(170);
+  const projectV2Data = await getProjectV2AndFields(170);
   const statusFieldId = getProjectV2FieldId('Status');
-  //console.log(github);
-  //console.log(context);
-  //console.log(context.payload.issue.title);
-  //console.log("context.payload: " + context.payload);
-  //console.log("context.issue: " + context.issue);
-  //console.log("context.issue.title: " + context.issue.title);
+  const projectId = projectV2Data.user.projectV2.id;
+  const projectTitle = projectV2Data.user.projectV2.title;
+  const eventName = context.eventName;
 
-  const issueTitle = context.payload.issue.title;
+  let nodeId = undefined;
+  let labels = undefined;
+  let itemTitle = undefined;
 
-  if (issueTitle.startsWith("Action items:"))
-  {
-    console.log("Found an action item");
+  if (context.payload.issue !== undefined){
+    nodeId = context.payload.issue.node_id;
+    labels = context.payload.issue.labels;
+    itemTitle = context.payload.issue.title;
+    const itemData = await getProjectV2ItemFromNodeId(nodeId, projectId, eventName);
+
+    if (itemTitle.startsWith("Action items:"))
+    {
+      console.log("Found an action item");
+      const data = updateStatus(projectId, itemData.id, statusFieldId, "Squad Work");
+      console.log("-- Updated project item --");
+      console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text);
+      console.log("Item ID: " + itemData.id);
+      console.log('Project Title: ' + projectTitle);
+      console.log('Project ID: ' + projectId);
+      console.log('Status: ' + "Squad Work");
+      console.log('Status Field ID: ' + statusFieldId);
+    }
   }
 
-  async function getProjectV2Fields(projectNumber){
+  async function getProjectV2AndFields(projectNumber){
     const query = `query($owner: String!, $projectNum: Int!){
       user(login:$owner) {
         projectV2(number:$projectNum) {
@@ -41,7 +55,7 @@ module.exports = async ({github, context}) => {
     return await github.graphql(query, variables);
   }
 
-  /* async function updateStatus(projectId, itemId, fieldId, value){
+  async function updateStatus(projectId, itemId, fieldId, value){
     const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: Date!){
       updateProjectV2ItemFieldValue(input: {
         projectId: $projectId
@@ -67,10 +81,52 @@ module.exports = async ({github, context}) => {
     };
 
     return await github.graphql(mutation, variables);
-  } */
+  }
+
+  async function getProjectV2ItemFromNodeId(nodeId, projectId, eventName){
+    switch(eventName){
+      case 'issues':
+        eventName = 'Issue'
+        break;
+      case 'pull_request':
+        eventName = 'PullRequest'
+        break;
+    }
+    const query = `query($nodeId: ID!) {
+      node(id: $nodeId) {
+        ... on ${eventName} {
+          projectItems(first: 100) {
+            ... on ProjectV2ItemConnection {
+              nodes {
+                ... on ProjectV2Item {
+                  id
+                  project {
+                    ... on ProjectV2 {
+                      id, title, number
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const variables = {
+      nodeId: nodeId
+    };
+
+    let data = await github.graphql(query, variables);
+
+    for (const projectItem of data.node.projectItems.nodes){
+      if (projectItem.project.id === projectId){
+        return projectItem;
+      }
+    }
+  }
 
   function getProjectV2FieldId(name) {
-    for (const field of queryResult.user.projectV2.fields.nodes){
+    for (const field of projectV2Data.user.projectV2.fields.nodes){
       if (field.name === name){
         return field.id;
       }
