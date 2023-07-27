@@ -1,6 +1,7 @@
 module.exports = async ({github, context}) => {
 
-  //const statusFieldId = getProjectV2FieldId('Status');
+  const queryResult = await getProjectV2Fields(170);
+  const statusFieldId = getProjectV2FieldId('Status');
   //console.log(github);
   //console.log(context);
   //console.log(context.payload.issue.title);
@@ -13,6 +14,31 @@ module.exports = async ({github, context}) => {
   if (issueTitle.startsWith("Action items:"))
   {
     console.log("Found an action item");
+  }
+
+  async function getProjectV2Fields(projectNumber){
+    const query = `query($owner: String!, $projectNum: Int!){
+      user(login:$owner) {
+        projectV2(number:$projectNum) {
+          id
+          title
+          fields(first: 100){
+            nodes {
+              ... on ProjectV2Field {
+                name
+                id
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const variables = {
+      owner: context.repo.owner,
+      projectNum: projectNumber,
+    };
+
+    return await github.graphql(query, variables);
   }
 
   /* async function updateStatus(projectId, itemId, fieldId, value){
@@ -43,13 +69,13 @@ module.exports = async ({github, context}) => {
     return await github.graphql(mutation, variables);
   } */
 
-  /* function getProjectV2FieldId(name) {
+  function getProjectV2FieldId(name) {
     for (const field of queryResult.user.projectV2.fields.nodes){
       if (field.name === name){
         return field.id;
       }
     }
-  } */
+  }
 
   return;
 }
