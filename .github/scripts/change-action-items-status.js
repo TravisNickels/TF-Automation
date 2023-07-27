@@ -2,9 +2,11 @@ module.exports = async ({github, context}) => {
 
   //const statusFieldId = getProjectV2FieldId('Status');
   //console.log(github);
-  //console.log(context);
+/*   console.log(context);
+  console.log(context.issue);
+  console.log(context.issue.title); */
 
-  const issueTitle = context.payload.issues.title;
+  const issueTitle = context.issue.title;
 
   if (issueTitle.startsWith("Action items:"))
   {
