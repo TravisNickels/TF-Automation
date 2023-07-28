@@ -22,6 +22,11 @@ module.exports = async ({github, context}) => {
     if (itemTitle.startsWith("Action items:"))
     {
       console.log("Found an action item");
+      console.log("ProjectId: " + projectId);
+      console.log("itemData.id: " + itemData.id);
+      console.log("statusFieldId: " + statusFieldId);
+      console.log("statusOptionId: " + statusOptionId);
+
       const data = updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
       console.log("-- Updated project item --");
       console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text);
