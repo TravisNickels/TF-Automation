@@ -27,7 +27,7 @@ module.exports = async ({github, context}) => {
       console.log("statusFieldId: " + statusFieldId);
       console.log("statusOptionId: " + statusOptionId);
 
-      const data = updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
+      const data = await updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
       console.log("-- Updated project item --");
       console.log("Data: " + data);
       console.log("Data.updateProjectV2ItemFieldValue: " + data.updateProjectV2ItemFieldValue);
