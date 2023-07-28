@@ -1,4 +1,4 @@
-import example from "./github-graphql-package";
+import example from "./github-graphql-package.mjs";
 
 module.exports = async ({github, context}) => {
   const projectV2Data = await getProjectV2Data(170);
