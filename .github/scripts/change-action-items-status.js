@@ -2,8 +2,9 @@ module.exports = async ({github, context}) => {
 
   console.log(context);
 
-  const projectV2Data = await getProjectV2AndFields(170);
+  const projectV2Data = await getProjectV2Data(170);
   const statusFieldId = getProjectV2FieldId('Status');
+  const statusOptionId = getProjectV2SingleSelectOptionId('Status', 'Squad Work');
   const projectId = projectV2Data.user.projectV2.id;
   const projectTitle = projectV2Data.user.projectV2.title;
   const eventName = context.eventName;
@@ -21,7 +22,7 @@ module.exports = async ({github, context}) => {
     if (itemTitle.startsWith("Action items:"))
     {
       console.log("Found an action item");
-      const data = updateStatus(projectId, itemData.id, statusFieldId, "Squad Work");
+      const data = updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
       console.log("-- Updated project item --");
       console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text);
       console.log("Item ID: " + itemData.id);
@@ -32,7 +33,7 @@ module.exports = async ({github, context}) => {
     }
   }
 
-  async function getProjectV2AndFields(projectNumber){
+  async function getProjectV2Data(projectNumber){
     const query = `query($owner: String!, $projectNum: Int!){
       user(login:$owner) {
         projectV2(number:$projectNum) {
@@ -47,6 +48,10 @@ module.exports = async ({github, context}) => {
               ... on ProjectV2SingleSelectField {
                 name
                 id
+                options{
+                  name
+                  id
+                }
               }
             }
           }
@@ -67,7 +72,7 @@ module.exports = async ({github, context}) => {
         projectId: $projectId
         itemId: $itemId
         fieldId: $fieldId
-        value: {date: $value}
+        value: {singleSelectOptionId: $value}
       }){
         projectV2Item {
           id
@@ -135,6 +140,18 @@ module.exports = async ({github, context}) => {
     for (const field of projectV2Data.user.projectV2.fields.nodes){
       if (field.name === name){
         return field.id;
+      }
+    }
+  }
+
+  function getProjectV2SingleSelectOptionId(fieldName, optionName) {
+    for (const field of projectV2Data.user.projectV2.fields.nodes){
+      if (field.name === fieldName){
+        for (const option of field.options) {
+          if (option.name == optionName){
+            return option.id;
+          }
+        }
       }
     }
   }
