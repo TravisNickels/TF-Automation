@@ -1,42 +1,31 @@
+import example from "./github-graphql-package";
+
 module.exports = async ({github, context}) => {
-
-  console.log(context);
-
   const projectV2Data = await getProjectV2Data(170);
-  const statusFieldId = getProjectV2FieldId('Status');
-  const statusOptionId = getProjectV2SingleSelectOptionId('Status', 'Squad Work');
   const projectId = projectV2Data.user.projectV2.id;
   const projectTitle = projectV2Data.user.projectV2.title;
+  const statusFieldId = getProjectV2FieldId('Status');
+  const statusOptionId = getProjectV2SingleSelectOptionId('Status', 'Squad Work');
   const eventName = context.eventName;
 
-  let nodeId = undefined;
-  let labels = undefined;
-  let itemTitle = undefined;
+  example.helloworld();
 
   if (context.payload.issue !== undefined){
-    nodeId = context.payload.issue.node_id;
-    labels = context.payload.issue.labels;
-    itemTitle = context.payload.issue.title;
+    const nodeId = context.payload.issue.node_id;
+    const itemTitle = context.payload.issue.title;
     const itemData = await getProjectV2ItemFromNodeId(nodeId, projectId, eventName);
 
     if (itemTitle.startsWith("Action items:"))
     {
-      console.log("Found an action item");
-      console.log("ProjectId: " + projectId);
-      console.log("itemData.id: " + itemData.id);
-      console.log("statusFieldId: " + statusFieldId);
-      console.log("statusOptionId: " + statusOptionId);
-
       const data = await updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
-      console.log("-- Updated project item --");
-      console.log("Data: " + data);
-      console.log("Data.updateProjectV2ItemFieldValue: " + data.updateProjectV2ItemFieldValue);
+      console.log("-- Updated action item project item --");
       console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text);
       console.log("Item ID: " + itemData.id);
       console.log('Project Title: ' + projectTitle);
       console.log('Project ID: ' + projectId);
       console.log('Status: ' + "Squad Work");
       console.log('Status Field ID: ' + statusFieldId);
+      console.log("statusOptionId: " + statusOptionId);
     }
   }
 
@@ -134,8 +123,9 @@ module.exports = async ({github, context}) => {
       nodeId: nodeId
     };
 
-    let data = await github.graphql(query, variables);
+    const data = await github.graphql(query, variables);
 
+    // Find and return the correct project item information from the projectId provided
     for (const projectItem of data.node.projectItems.nodes){
       if (projectItem.project.id === projectId){
         return projectItem;
