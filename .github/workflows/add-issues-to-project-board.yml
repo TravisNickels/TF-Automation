@@ -44,10 +44,16 @@ jobs:
         with:
           github-token: ${{ secrets.TN_PAT }}
           script: |
-            const script = require('.github/scripts/change-action-items-status.mjs');
-            (async () => {
-              await script({github, context});
-            })();
+            // Use dynamic import to import the ES6 module
+            const { default: script } = await import('.github/scripts/change-action-items-status.mjs');
+
+            // Call the function from the imported module
+            await script({github, context});
+
+      #const script = require('.github/scripts/change-action-items-status.mjs');
+      #(async () => {
+      #  await script({github, context});
+      #})();
   #check-status:
   #  name: Check status on issue
   #  runs-on: ubuntu-latest
