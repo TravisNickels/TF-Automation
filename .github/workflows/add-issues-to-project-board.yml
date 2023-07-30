@@ -48,7 +48,7 @@ jobs:
           github-token: ${{ secrets.TN_PAT }}
           script: |
             // Use dynamic import to import the ES6 module
-            const { default: script } = await import('./.github/scripts/change-action-items-status.mjs');
+            const { default: script } = await import('${{ github.workspace }}/.github/scripts/change-action-items-status.mjs');
 
             // Call the function from the imported module
             await script({github, context});
