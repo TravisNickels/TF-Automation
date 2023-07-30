@@ -1,4 +1,4 @@
-import myFunction from "./github-graphql-package.mjs";
+import * as functions from "./github-graphql-package.mjs";
 //module.exports
 export default async ({github, context}) => {
   const projectV2Data = await getProjectV2Data(170);
@@ -9,7 +9,9 @@ export default async ({github, context}) => {
   const eventName = context.eventName;
 
   //myFunction.helloworld();
-  console.log(myFunction());
+  console.log(functions.func1());
+  console.log(functions.func2());
+  //console.log(myFunction());
 
   if (context.payload.issue !== undefined){
     const nodeId = context.payload.issue.node_id;
