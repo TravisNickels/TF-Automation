@@ -1,4 +1,4 @@
-import example from "./github-graphql-package.mjs";
+import myFunction from "./github-graphql-package.mjs";
 
 module.exports = async ({github, context}) => {
   const projectV2Data = await getProjectV2Data(170);
@@ -8,7 +8,8 @@ module.exports = async ({github, context}) => {
   const statusOptionId = getProjectV2SingleSelectOptionId('Status', 'Squad Work');
   const eventName = context.eventName;
 
-  example.helloworld();
+  //myFunction.helloworld();
+  console.log(myFunction());
 
   if (context.payload.issue !== undefined){
     const nodeId = context.payload.issue.node_id;
