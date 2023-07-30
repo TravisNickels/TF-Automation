@@ -39,13 +39,16 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/github-script@v6
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Run GitHub Script
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.TN_PAT }}
           script: |
             // Use dynamic import to import the ES6 module
-            const { default: script } = await import('.github/scripts/change-action-items-status.mjs');
+            const { default: script } = await import('./.github/scripts/change-action-items-status.mjs');
 
             // Call the function from the imported module
             await script({github, context});
