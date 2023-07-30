@@ -4,8 +4,6 @@
   }
 } */
 
-const myfunction = () => {
+export default function myfunction() {
   return 'Hello world';
 }
-
-export {myfunction};
