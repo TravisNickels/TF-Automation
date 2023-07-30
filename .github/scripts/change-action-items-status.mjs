@@ -1,6 +1,6 @@
 import myFunction from "./github-graphql-package.mjs";
-
-module.exports = async ({github, context}) => {
+//module.exports
+export default async ({github, context}) => {
   const projectV2Data = await getProjectV2Data(170);
   const projectId = projectV2Data.user.projectV2.id;
   const projectTitle = projectV2Data.user.projectV2.title;
