@@ -44,7 +44,7 @@ jobs:
         with:
           github-token: ${{ secrets.TN_PAT }}
           script: |
-            const script = require('.github/scripts/change-action-items-status.js');
+            const script = require('.github/scripts/change-action-items-status.mjs');
             (async () => {
               await script({github, context});
             })();
