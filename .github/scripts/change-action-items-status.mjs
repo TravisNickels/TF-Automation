@@ -1,20 +1,14 @@
-import * as functions from "./github-graphql-api.mjs";
+import * as githubGraphQLApi from "./github-graphql-api.mjs";
 //module.exports
 export default async ({github, context}) => {
-  const projectV2Data = await getProjectV2Data(170);
+  const owner = context.repo.owner;
+  //const projectV2Data = await getProjectV2Data(170);
+  const projectV2Data = await githubGraphQLApi.getProjectV2Data(170, owner, github);
   const projectId = projectV2Data.user.projectV2.id;
   const projectTitle = projectV2Data.user.projectV2.title;
   const statusFieldId = getProjectV2FieldId('Status');
   const statusOptionId = getProjectV2SingleSelectOptionId('Status', 'Squad Work');
   const eventName = context.eventName;
-
-  //myFunction.helloworld();
-  //console.log(functions.func1());
-  //console.log(functions.func2());
-  //console.log(myFunction());
-
-  let foo = await functions.func3(170, context.repo.owner, github);
-  console.log("Await foo projectV2Data ID: " + foo.user.projectV2.id);
 
   if (context.payload.issue !== undefined){
     const nodeId = context.payload.issue.node_id;
@@ -35,7 +29,7 @@ export default async ({github, context}) => {
     }
   }
 
-  async function getProjectV2Data(projectNumber){
+  /* async function getProjectV2Data(projectNumber){
     const query = `query($owner: String!, $projectNum: Int!){
       user(login:$owner) {
         projectV2(number:$projectNum) {
@@ -66,7 +60,7 @@ export default async ({github, context}) => {
     };
 
     return await github.graphql(query, variables);
-  }
+  } */
 
   async function updateStatus(projectId, itemId, fieldId, value){
     const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!){

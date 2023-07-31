@@ -4,22 +4,23 @@
   }
 } */
 
-/* export default function myfunction() {
-  return 'Hello world';
-} */
-
-export const func1 = () => {
-  return 'func1';
-}
-
-export const func2 = () => {
-  return 'func2';
-}
-
-export const func3 = async (projectNumber, owner, github) => {
-  const query = `query($owner: String!, $projectNum: Int!){
+/**
+ * 
+ * @param {int} projectNumber - The number of the GitHub projectV2 (e.g. 3)
+ * @param {string} owner - The owner of the repo
+ * @param {context} github - The github context of the running action
+ * @returns ProjectV2 field information object based on the graphQL query format.  For example:
+ * - {variable}.user.projectV2.id
+ * - {variable}.user.projectV2.title
+ * - {variable}.user.projectV2.fields.nodes[array].name
+ * - {variable}.user.projectV2.fields.nodes[array].id
+ * - {variable}.user.projectV2.fields.nodes[array].options[array].name
+ * - {variable}.user.projectV2.fields.nodes[array].options[array].id
+ */
+export const getProjectV2Data = async (projectNumber, owner, github) => {
+  const query = `query($owner: String!, $projectNumber: Int!){
     user(login:$owner) {
-      projectV2(number:$projectNum) {
+      projectV2(number:$projectNumber) {
         id
         title
         fields(first: 100){
@@ -43,7 +44,7 @@ export const func3 = async (projectNumber, owner, github) => {
   }`;
   const variables = {
     owner: owner,
-    projectNum: projectNumber,
+    projectNumber: projectNumber,
   };
 
   return await github.graphql(query, variables);
