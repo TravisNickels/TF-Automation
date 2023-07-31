@@ -49,3 +49,41 @@ export const getProjectV2Data = async (projectNumber, owner, github) => {
 
   return await github.graphql(query, variables);
 }
+
+/**
+ * 
+ * @param {string} projectId - The node_id of the GitHub projectV2
+ * @param {string} itemId - The node_id of the projectV2 item
+ * @param {string} fieldId - The node_id of the projectV2 status field
+ * @param {string} value  - The id of the single select status option
+ * @param {context} github - The github context of the running action
+ * @returns The title of the projectV2 item that had the status updated
+ * - updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text
+ */
+export const updateStatus = async (projectId, itemId, fieldId, value, github) => {
+  const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!){
+    updateProjectV2ItemFieldValue(input: {
+      projectId: $projectId
+      itemId: $itemId
+      fieldId: $fieldId
+      value: {singleSelectOptionId: $value}
+    }){
+      projectV2Item {
+        id
+        fieldValueByName(name: "Title"){
+          ... on ProjectV2ItemFieldTextValue {
+            text
+          }
+        }
+      }
+    }
+  }`;
+  const variables = {
+    projectId: projectId,
+    itemId: itemId,
+    fieldId: fieldId,
+    value: value
+  };
+
+  return await github.graphql(mutation, variables);
+}

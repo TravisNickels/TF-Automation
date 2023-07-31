@@ -17,7 +17,7 @@ export default async ({github, context}) => {
 
     if (itemTitle.startsWith("Action items:"))
     {
-      const data = await updateStatus(projectId, itemData.id, statusFieldId, statusOptionId);
+      const data = await githubGraphQLApi.updateStatus(projectId, itemData.id, statusFieldId, statusOptionId, github);
       console.log("-- Updated action item project item --");
       console.log("Item title: " + data.updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text);
       console.log("Item ID: " + itemData.id);
@@ -62,7 +62,7 @@ export default async ({github, context}) => {
     return await github.graphql(query, variables);
   } */
 
-  async function updateStatus(projectId, itemId, fieldId, value){
+  /* async function updateStatus(projectId, itemId, fieldId, value){
     const mutation = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!){
       updateProjectV2ItemFieldValue(input: {
         projectId: $projectId
@@ -88,7 +88,7 @@ export default async ({github, context}) => {
     };
 
     return await github.graphql(mutation, variables);
-  }
+  } */
 
   async function getProjectV2ItemFromNodeId(nodeId, projectId, eventName){
     switch(eventName){
