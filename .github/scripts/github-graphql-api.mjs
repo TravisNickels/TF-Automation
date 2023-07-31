@@ -125,7 +125,7 @@ export const getProjectV2ItemFromNodeId = async (nodeId, projectId, eventName, g
   // Find and return the correct project item information from the projectId provided
   for (const projectItem of data.node.projectItems.nodes){
     if (projectItem.project.id === projectId){
-      return projectItem;
+      return await projectItem;
     }
   }
 }
