@@ -79,3 +79,53 @@ export const updateStatus = async (projectId, itemId, fieldId, value, github) =>
 
   return await github.graphql(mutation, variables);
 }
+
+/**
+ * @param {string} nodeId 
+ * @param {string} projectId 
+ * @param {string} eventName 
+ * @param {context} github 
+ * @returns 
+ */
+export const getProjectV2ItemFromNodeId = async (nodeId, projectId, eventName, github) => {
+  switch(eventName){
+    case 'issues':
+      eventName = 'Issue'
+      break;
+    case 'pull_request':
+      eventName = 'PullRequest'
+      break;
+  }
+  const query = `query($nodeId: ID!) {
+    node(id: $nodeId) {
+      ... on ${eventName} {
+        projectItems(first: 100) {
+          ... on ProjectV2ItemConnection {
+            nodes {
+              ... on ProjectV2Item {
+                id
+                project {
+                  ... on ProjectV2 {
+                    id, title, number
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }`;
+  const variables = {
+    nodeId: nodeId
+  };
+
+  const data = await github.graphql(query, variables);
+
+  // Find and return the correct project item information from the projectId provided
+  for (const projectItem of data.node.projectItems.nodes){
+    if (projectItem.project.id === projectId){
+      return projectItem;
+    }
+  }
+}
