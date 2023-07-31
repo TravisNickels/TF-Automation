@@ -16,7 +16,7 @@ export const func2 = () => {
   return 'func2';
 }
 
-export const func3 = async (projectNumber, owner) => {
+export const func3 = async (projectNumber, owner, github) => {
   const query = `query($owner: String!, $projectNum: Int!){
     user(login:$owner) {
       projectV2(number:$projectNum) {

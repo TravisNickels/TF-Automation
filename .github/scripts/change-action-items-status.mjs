@@ -13,7 +13,7 @@ export default async ({github, context}) => {
   //console.log(functions.func2());
   //console.log(myFunction());
 
-  let foo = await functions.func3(170, context.repo.owner);
+  let foo = await functions.func3(170, context.repo.owner, github);
   console.log("Await foo projectV2Data ID: " + foo.user.projectV2.id);
 
   if (context.payload.issue !== undefined){

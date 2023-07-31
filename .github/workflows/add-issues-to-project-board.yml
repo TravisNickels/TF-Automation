@@ -10,9 +10,6 @@ on:
       - opened
       - reopened
       - transferred
-  project_card:
-    types:
-      - moved
   pull_request:
     types:
       - opened
@@ -34,7 +31,7 @@ jobs:
           project-url: https://github.com/users/TravisNickels/projects/170
           github-token: ${{ secrets.TN_PAT }}
   update-action-item-status:
-    name: Update the status of the action item issue to `Squad Work`
+    name: Update the status of an action item issue to `Squad Work`
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -48,10 +45,11 @@ jobs:
           github-token: ${{ secrets.TN_PAT }}
           script: |
             // Use dynamic import to import the ES6 module
-            const { default: script } = await import('${{ github.workspace }}/.github/scripts/change-action-items-status.mjs');
+            // The import needs to be the absolute path name
+            const { default: actionItemScript } = await import('${{ github.workspace }}/.github/scripts/change-action-items-status.mjs');
 
             // Call the function from the imported module
-            await script({github, context});
+            await actionItemScript({github, context});
 
       #const script = require('.github/scripts/change-action-items-status.mjs');
       #(async () => {
