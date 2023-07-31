@@ -13,7 +13,7 @@ export default async ({github, context}) => {
   if (context.payload.issue !== undefined){
     const nodeId = context.payload.issue.node_id;
     const itemTitle = context.payload.issue.title;
-    const itemData = await getProjectV2ItemFromNodeId(nodeId, projectId, eventName);
+    const itemData = await githubGraphQLApi.getProjectV2ItemFromNodeId(nodeId, projectId, eventName, github);
 
     if (itemTitle.startsWith("Action items:"))
     {
@@ -90,7 +90,7 @@ export default async ({github, context}) => {
     return await github.graphql(mutation, variables);
   } */
 
-  async function getProjectV2ItemFromNodeId(nodeId, projectId, eventName){
+  /* async function getProjectV2ItemFromNodeId(nodeId, projectId, eventName){
     switch(eventName){
       case 'issues':
         eventName = 'Issue'
@@ -131,7 +131,7 @@ export default async ({github, context}) => {
         return projectItem;
       }
     }
-  }
+  } */
 
   function getProjectV2FieldId(name) {
     for (const field of projectV2Data.user.projectV2.fields.nodes){

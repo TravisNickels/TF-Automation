@@ -1,11 +1,4 @@
-/* module.exports = {
-  helloworld: function () {
-    console.log("Hello world");
-  }
-} */
-
 /**
- * 
  * @param {int} projectNumber - The number of the GitHub projectV2 (e.g. 3)
  * @param {string} owner - The owner of the repo
  * @param {context} github - The github context of the running action
@@ -51,7 +44,6 @@ export const getProjectV2Data = async (projectNumber, owner, github) => {
 }
 
 /**
- * 
  * @param {string} projectId - The node_id of the GitHub projectV2
  * @param {string} itemId - The node_id of the projectV2 item
  * @param {string} fieldId - The node_id of the projectV2 status field
