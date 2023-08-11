@@ -81,11 +81,16 @@ export const updateStatus = async (projectId, itemId, fieldId, value, github) =>
 }
 
 /**
- * @param {string} nodeId 
- * @param {string} projectId 
- * @param {string} eventName 
- * @param {context} github 
- * @returns 
+ * 
+ * @param {*} nodeId - The node_id of the issue or pull request
+ * @param {*} projectId - The node_id of the projectV2
+ * @param {*} eventName - The event name from the action context
+ * @param {*} github - The github context of the running action
+ * @returns Project item id and the corresponding projectV2 id, title, and number
+ * - {variable}.id
+ * - {variable}.project.id
+ * - {variable}.project.title
+ * - {variable}.project.number
  */
 export const getProjectV2ItemFromNodeId = async (nodeId, projectId, eventName, github) => {
   switch(eventName){
