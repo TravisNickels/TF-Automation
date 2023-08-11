@@ -23,23 +23,19 @@ jobs:
   add-to-project:
     name: Add issue to project
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/add-to-project@v0.5.0
         with:
           # You can target a repository in a different organization
-          # to the issue
           project-url: https://github.com/users/TravisNickels/projects/170
           github-token: ${{ secrets.TN_PAT }}
-  update-action-item-status:
-    name: Update the status of an action item issue to `Squad Work`
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-    steps:
+
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: Run GitHub Script
+      - name: If issue is an action item update the status to `Squad Work`
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.TN_PAT }}
@@ -50,6 +46,27 @@ jobs:
 
             // Call the function from the imported module
             await actionItemScript({github, context});
+
+  #update-action-item-status:
+  #  name: Update the status of an action item issue to `Squad Work`
+  #  runs-on: ubuntu-latest
+  #  permissions:
+  #    issues: write
+  #  steps:
+  #    - name: Checkout code
+  #      uses: actions/checkout@master
+
+  #    - name: Run GitHub Script
+  #      uses: actions/github-script@v6
+  #      with:
+  #        github-token: ${{ secrets.TN_PAT }}
+  #        script: |
+  #          // Use dynamic import to import the ES6 module
+  #          // The import needs to be the absolute path name
+  #          const { default: actionItemScript } = await import('${{ github.workspace }}/.github/scripts/change-action-items-status.mjs');
+
+  #          // Call the function from the imported module
+  #          await actionItemScript({github, context});
 
       #const script = require('.github/scripts/change-action-items-status.mjs');
       #(async () => {
