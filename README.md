@@ -26,7 +26,30 @@ asb-transport endpoint subscribe <queue name> <eventtype>
 
 ***
 
-## Graphql Authentication
+## Using Altair GraphQL Client IDE
+
+- Reference: [Using the Altair GraphQL client IDE](https://docs.github.com/en/graphql/guides/using-the-explorer#using-the-altair-graphql-client-ide)
+- Altair Download: https://altairgraphql.dev/
+- Altair Documentation: https://altairgraphql.dev/docs/
+- Altair GitHub Repo: https://github.com/altair-graphql/altair
+- GitHub GraphQL schema: https://docs.github.com/en/graphql/overview/public-schema
+
+### Configure Altair
+
+1. Get an [access token](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql)
+2. Install and launch Altair
+3. In the left sidebar, below the Altair logo, click Set Headers. A new window will open.
+4. In the "Header key" field, enter `Authorization`.
+5. In the "Header value" field, enter `Bearer TOKEN`, replacing `TOKEN` with your token from the first step.
+6. In the "Header key" field, enter `X-Github-Next-Global-ID`.
+7. In the "Header value" field, enter `1`
+8. Click Save in the bottom right corner of the window to save your authorization header.
+9. In the "GraphQL Endpoint" field, enter https://api.github.com/graphql.
+10. To load the GitHub GraphQL schema, download the [public schema](https://docs.github.com/en/graphql/overview/public-schema).
+11. In Altair, click on Docs on the top right, then the three dots and Load Schema...
+12. Select the file public schema that you downloaded in an earlier step.
+
+## Graphql Authentication CLI
 
 Before running GitHub CLI commands, you must authenticate by running `gh auth login --scopes "project"`. If you only need to read, but not edit, projects, you can provide the `read:project` scope instead of `project`. For more information on command line authentication, see "[gh auth login](https://cli.github.com/manual/gh_auth_login)."
 
