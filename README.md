@@ -194,3 +194,12 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ reposit
 - https://docs.gitlab.com/ee/api/projects.html
 - https://www.apollographql.com/blog/graphql/basics/using-the-github-graphql-api-with-apollo-studio-explorer/
 - https://graphql.org/
+
+> **Note**
+> Note test
+
+> **Important**
+> Important test
+
+> **Warning**
+> Warning test
