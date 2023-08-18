@@ -218,6 +218,3 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ reposit
 
 > **Warning**
 > Warning test
-
-> **Error**
-> Error test
