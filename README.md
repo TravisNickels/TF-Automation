@@ -6,6 +6,7 @@ Just a test repo for Task force project board creation
 > Make sure to create an `error` queue and a queue that is the name of your AzureWebJobsStorage inside of your AzureWebJobsServiceBus
 
 **Get asb-transport CLI**
+
 ```ps
 dotnet tool install -g NServiceBus.Transport.AzureServiceBus.CommandLine
 ```
@@ -20,19 +21,18 @@ asb-transport endpoint create <queue name>
 ```
 
 **Subscribe to events**
+
 ```shell
 asb-transport endpoint subscribe <queue name> <eventtype>
 ```
 
-***
-
 ## Using Altair GraphQL Client IDE
 
 - Reference: [Using the Altair GraphQL client IDE](https://docs.github.com/en/graphql/guides/using-the-explorer#using-the-altair-graphql-client-ide)
-- Altair Download: https://altairgraphql.dev/
-- Altair Documentation: https://altairgraphql.dev/docs/
-- Altair GitHub Repo: https://github.com/altair-graphql/altair
-- GitHub GraphQL schema: https://docs.github.com/en/graphql/overview/public-schema
+- Altair Download: <https://altairgraphql.dev/>
+- Altair Documentation: <https://altairgraphql.dev/docs/>
+- Altair GitHub Repo: <https://github.com/altair-graphql/altair>
+- GitHub GraphQL schema: <https://docs.github.com/en/graphql/overview/public-schema>
 
 ### Configure Altair
 
@@ -44,7 +44,7 @@ asb-transport endpoint subscribe <queue name> <eventtype>
 6. In the "Header key" field, enter `X-Github-Next-Global-ID`.
 7. In the "Header value" field, enter `1`
 8. Click Save in the bottom right corner of the window to save your authorization header.
-9. In the "GraphQL Endpoint" field, enter https://api.github.com/graphql.
+9. In the "GraphQL Endpoint" field, enter <https://api.github.com/graphql>.
 10. To load the GitHub GraphQL schema, download the [public schema](https://docs.github.com/en/graphql/overview/public-schema).
 11. In Altair, click on Docs on the top right, then the three dots and Load Schema...
 12. Select the file public schema that you downloaded in an earlier step.
@@ -57,7 +57,7 @@ Before running GitHub CLI commands, you must authenticate by running `gh auth lo
 
 legacy_global_id is is now deprecated, which typically looks like this `MDQ6VXNlcjM0MDczMDM=`.  There is now a next_global_id that is being used that has a format like `PVT_kwHOBTAVOs4ANTT3`. By adding another header to the API call the new `next_global_id` can be retrieved.
 
-##### Powershell
+### Powershell
 
 Instead of doing this command to get the `node_id` of an authenticated user
 
@@ -65,7 +65,7 @@ Instead of doing this command to get the `node_id` of an authenticated user
 gh api -H "Accept: application/vnd.github+json" /users/{username}
 ```
 
-##### Result
+### Result
 
 ```json
 {
@@ -78,6 +78,7 @@ Add this to the API call to get the new next_global_id `node_id`
 ```graphql
 gh api -H "Accept: application/vnd.github+json" -H "X-Github-Next-Global-ID: 1" /users/{username}
 ```
+
 ```json
 {
   "node_id": "U_kgDOBTAVOg"
@@ -85,6 +86,7 @@ gh api -H "Accept: application/vnd.github+json" -H "X-Github-Next-Global-ID: 1" 
 ```
 
 ## Creating projects
+
 To create a new project using the API, you'll need to provide a name for the project and the node ID of a GitHub user or organization who will become the project's owner.
 
 You can find the node ID of a GitHub user or organization if you know the username. Replace `GITHUB_OWNER` with the GitHub username of the new project owner.
@@ -92,12 +94,16 @@ To create the project, replace OWNER_ID with the node ID of the new project owne
 
 To create the project, replace `OWNER_ID` with the `node_id` of the new project owner using the new `next_global_id` and replace `PROJECT_NAME` with a name for the project.
 
-##### Powershell
-When using powershell and doing a query or mutation make sure to escape the quotation marks `"` using a a backslash `\` when indicating a String. 
+### Powershell
+
+When using powershell and doing a query or mutation make sure to escape the quotation marks `"` using a a backslash `\` when indicating a String.
+
 ```graphql
 gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV2(input:{ownerId:\"U_kgDOBTAVOg\",title:\"TF-Project\"}){projectV2{id}}}'
 ```
-##### Result
+
+### Result
+
 ```json
 {
   "data": {
@@ -114,11 +120,14 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV
 
 If you use the legacy_node_id, but include the `X-Github-Next-Global-ID: 1` header then the project will get created, but a deprecation warning will show up letting you  know that you should use `next_global_id` instead.
 
-##### Powershell
+#### Powershell
+
 ```graphql
 gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV2(input:{ownerId:\"MDQ6VXNlcjg3MDM3MjQy\",title:\"TF-Project\"}){projectV2{id}}}'
 ```
-##### Result
+
+#### Result
+
 ```json
 {
   "data": {
@@ -146,11 +155,14 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV
 
 ## Get node_id for project
 
-##### Powershell
+### Powershell
+
 ```graphql
 gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ user(login:\"{username}\") { projectV2(number: 11) { id } } }'
 ```
-##### Result
+
+### Result
+
 ```json
 {
   "data": {
@@ -165,11 +177,14 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ user(lo
 
 ## Get node_id for issue
 
-##### Powershell
+### Powershell
+
 ```graphql
 gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ repository(owner:\"TravisNickels\", name:\"TF-Automation\") { issue(number: 1) { id } } }'
 ```
-##### Result
+
+### Result
+
 ```json
 {
   "data": {
@@ -182,18 +197,18 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ reposit
 }
 ```
 
-
 ## Links
-- https://github.com/octokit/octokit.graphql.net
-- https://github.com/boblangley/tf-automation
-- https://cli.github.com/manual/gh_api
-- https://devopsjournal.io/blog/2022/11/28/github-graphql-queries
-- https://github.com/community/community/discussions/39777
-- https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
-- https://api.github.com/users/{username}
-- https://docs.gitlab.com/ee/api/projects.html
-- https://www.apollographql.com/blog/graphql/basics/using-the-github-graphql-api-with-apollo-studio-explorer/
-- https://graphql.org/
+
+- <https://github.com/octokit/octokit.graphql.net>
+- <https://github.com/boblangley/tf-automation>
+- <https://cli.github.com/manual/gh_api>
+- <https://devopsjournal.io/blog/2022/11/28/github-graphql-queries>
+- <https://github.com/community/community/discussions/39777>
+- <https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects>
+- <https://api.github.com/users/{username}>
+- <https://docs.gitlab.com/ee/api/projects.html>
+- <https://www.apollographql.com/blog/graphql/basics/using-the-github-graphql-api-with-apollo-studio-explorer/>
+- <https://graphql.org/>
 
 > **Note**
 > Note test
