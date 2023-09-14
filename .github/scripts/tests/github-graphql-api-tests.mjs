@@ -33,6 +33,6 @@ describe('My Tests', function() {
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
-    expect(response.user.projectV2.id).to.equal(170);
+    expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8');
   });
 });
