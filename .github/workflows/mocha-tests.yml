@@ -18,7 +18,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install mocha@latest
 
       - name: Run Mocha tests
         run: npx mocha .github/scripts/tests/github-graphql-api-tests.js
