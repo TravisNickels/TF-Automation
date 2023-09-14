@@ -4,7 +4,7 @@
 import { describe, it } from 'mocha';
 //import assert from 'assert';
 //import { Octokit } from '@octokit/rest'
-import { github } from '@actions/github';
+import github from '@actions/github';
 //import { Octokit } from 'octokit'
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
 
