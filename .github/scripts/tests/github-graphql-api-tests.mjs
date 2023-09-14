@@ -3,7 +3,7 @@
 //const { Octokit } = require("@octokit/rest");
 import { describe, it } from 'mocha';
 //import assert from 'assert';
-import Octokit from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
 
 describe('My Tests', function() {
