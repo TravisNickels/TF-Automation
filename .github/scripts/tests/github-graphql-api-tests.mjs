@@ -10,7 +10,7 @@ describe('My Tests', function() {
   it('should pass this test', async function() {
 
     const octokit = new Octokit({
-      auth: process.env.github-token,
+      auth: process.env.GITHUB_TOKEN,
     });
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
