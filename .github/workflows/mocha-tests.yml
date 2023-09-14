@@ -17,8 +17,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install actions github
+      - name: Install @actions/github
         run: npm install @actions/github
+
+      - name: Install @actions/core
+        run: npm install @actions/core
 
       - name: Install @octokit/resQt
         run: npm install @octokit/rest
@@ -27,6 +30,6 @@ jobs:
         run: npm install mocha@latest
 
       - name: Run Mocha tests
-        run: npx mocha .github/scripts/tests/github-graphql-api-tests.mjs
         env:
-          GITHUB_TOKEN: ${{ secrets.TN_PAT }}
+          TN_PAT: ${{ secrets.TN_PAT }}
+        run: npx mocha .github/scripts/tests/github-graphql-api-tests.mjs
