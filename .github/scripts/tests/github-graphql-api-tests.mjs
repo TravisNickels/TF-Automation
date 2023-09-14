@@ -11,6 +11,8 @@ import * as githubGraphQLApi from "../github-graphql-api.mjs";
 describe('My Tests', function() {
   it('should pass this test', async function() {
 
+    console.log("GITHUB_TOKEN: " + process.env.GITHUB_TOKEN );
+    console.log("github object: " + github );
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 
     /* const octokit = new Octokit({
