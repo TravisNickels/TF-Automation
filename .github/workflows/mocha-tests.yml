@@ -1,4 +1,4 @@
-name: Mocha Tests with actions/github-script
+name: Mocha Tests
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -13,14 +13,14 @@ jobs:
         uses: actions/checkout@master
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.8.1
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
 
       - name: Run Mocha tests
-        run: npx mocha tests/github-graphql-api-tests.js
+        run: npx mocha .github/scripts/tests/github-graphql-api-tests.js
         env:
           GITHUB_TOKEN: ${{ secrets.TN_PAT }}
