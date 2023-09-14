@@ -4,24 +4,27 @@
 import { describe, it } from 'mocha';
 //import assert from 'assert';
 //import { Octokit } from '@octokit/rest'
-import github from '@actions/github';
-import { Github } from '@actions/github';
-import core from '@actions/core';
+//import github from '@actions/github';
+//import pkg from '@actions/github';
+//const { Github } = pkg;
+import * as github from '@actions/github';
+//import core from '@actions/core';
 //import { Octokit } from 'octokit'
+import { Octokit } from '@octokit/core';
+import { createTokenAuth } from '@octokit/auth-token';
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
 
 describe('My Tests', function() {
   it('should pass this test', async function() {
 
-    console.log("TN_PAT: " + process.env.TN_PAT );
-    console.log("GITHUB_TOKEN: " + process.env.GITHUB_TOKEN );
-    console.log("github object: " + github );
-
+    const auth = createTokenAuth(process.env.TN_PAT);
+    const { token } = await auth();
+    const octokit = new Octokit({ auth: token });
     //const myToken = core.getInput('TN_PAT')
-    const myToken = process.env.TN_PAT;
+    //const myToken = process.env.TN_PAT;
     //const octokit = github.getOctokit(myToken);
 
-    const octokit = new Octokit(myToken);
+    //const octokit = new Octokit(myToken);
 
     /* const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
