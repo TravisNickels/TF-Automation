@@ -5,6 +5,7 @@ import { describe, it } from 'mocha';
 //import assert from 'assert';
 //import { Octokit } from '@octokit/rest'
 import github from '@actions/github';
+import { Github } from '@actions/github';
 import core from '@actions/core';
 //import { Octokit } from 'octokit'
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
@@ -16,8 +17,11 @@ describe('My Tests', function() {
     console.log("GITHUB_TOKEN: " + process.env.GITHUB_TOKEN );
     console.log("github object: " + github );
 
-    const myToken = core.getInput('TN_PAT')
-    const octokit = github.getOctokit(myToken);
+    //const myToken = core.getInput('TN_PAT')
+    const myToken = process.env.TN_PAT;
+    //const octokit = github.getOctokit(myToken);
+
+    const octokit = new Octokit(myToken);
 
     /* const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
