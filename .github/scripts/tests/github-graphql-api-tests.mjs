@@ -2,6 +2,7 @@
 //const { describe } = require('node:test');
 //const { Octokit } = require("@octokit/rest");
 import { describe, it } from 'mocha';
+import expect from 'chai';
 //import assert from 'assert';
 //import { Octokit } from '@octokit/rest'
 //import github from '@actions/github';
