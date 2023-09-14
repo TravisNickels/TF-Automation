@@ -1,0 +1,26 @@
+name: Mocha Tests with actions/github-script
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Mocha tests
+        run: npx mocha tests/github-graphql-api-tests.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.TN_PAT }}
