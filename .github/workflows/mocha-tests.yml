@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm install mocha@latest
 
+      - name: Install dependencies
+        run: npm install chai@latest
+
       - name: Run Mocha tests
         env:
           TN_PAT: ${{ secrets.TN_PAT }}
