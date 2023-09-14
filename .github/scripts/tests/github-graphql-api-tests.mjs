@@ -3,15 +3,19 @@
 //const { Octokit } = require("@octokit/rest");
 import { describe, it } from 'mocha';
 //import assert from 'assert';
-import { Octokit } from '@octokit/rest'
+//import { Octokit } from '@octokit/rest'
+import { github } from '@actions/github';
+//import { Octokit } from 'octokit'
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
 
 describe('My Tests', function() {
   it('should pass this test', async function() {
 
-    const octokit = new Octokit({
+    const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+
+    /* const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
-    });
+    }); */
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
