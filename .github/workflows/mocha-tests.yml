@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install actions github
+        run: npm install @actions/github
+
       - name: Install @octokit/resQt
         run: npm install @octokit/rest
 
