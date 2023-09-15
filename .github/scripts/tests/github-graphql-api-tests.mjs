@@ -72,7 +72,7 @@ describe('My Tests', function() {
       .post('/graphql') // Mock the GraphQL endpoint
       .reply(200, { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
 
-    const response = await graphql(query, variables);
+    const response = await graphql(query, { headers: { authorization: process.env.TN_PAT, }, }, variables);
 
     //const response = await octokit.graphql(query, variables);
 
