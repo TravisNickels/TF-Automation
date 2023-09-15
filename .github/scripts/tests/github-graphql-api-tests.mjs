@@ -3,7 +3,7 @@
 //const { Octokit } = require("@octokit/rest");
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { nock } from 'nock';
+import nock from 'nock';
 //import assert from 'assert';
 import { Octokit } from '@octokit/rest'
 //import github from '@actions/github';
