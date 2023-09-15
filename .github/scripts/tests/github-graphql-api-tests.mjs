@@ -29,7 +29,7 @@ describe('My Tests', function() {
     //const octokit = new Octokit(myToken);
 
     const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      auth: process.env.TN_PAT,
     });
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
