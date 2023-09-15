@@ -5,7 +5,8 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import nock from 'nock';
 //import assert from 'assert';
-import { Octokit } from '@octokit/rest'
+import { Octokit } from '@octokit/rest';
+import { graphql } from '@octokit/graphql';
 //import github from '@actions/github';
 //import pkg from '@actions/github';
 //const { Github } = pkg;
@@ -71,7 +72,9 @@ describe('My Tests', function() {
       .post('/graphql') // Mock the GraphQL endpoint
       .reply(200, { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
 
-    const response = await octokit.graphql(query, variables);
+    const response = await graphql(query, variables);
+
+    //const response = await octokit.graphql(query, variables);
 
     //const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
