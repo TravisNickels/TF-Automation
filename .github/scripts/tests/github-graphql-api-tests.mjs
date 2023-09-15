@@ -20,12 +20,23 @@ import * as githubGraphQLApi from "../github-graphql-api.mjs";
 describe('My Tests', function() {
   before(() => {
     // Set up nock to intercept Github API requests
-    nock('https://api.github.com')
+    /* nock('https://api.github.com')
       .post('/graphql') // Mock the GraphQL endpoint
       .reply(200, (uri, requestBody) => {
         console.log('Intercepted GraphQL request:', uri, requestBody);
-        return { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}};    
-    });
+        return { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}};
+    }); */
+
+    nock('https://api.github.com')
+      .post('/graphql')
+      .reply(200, {
+        data: {
+          repository: {
+            name: 'mocked-repo',
+            description: 'Mocked description',
+          },
+        },
+      });
   })
   it('should pass this test', async function() {
 
@@ -42,6 +53,23 @@ describe('My Tests', function() {
     const octokit = new Octokit({
       auth: process.env.TN_PAT,
     });
+
+    // Your GraphQL query
+  const query = `
+    query {
+      repository(owner: "TravisNickels", name: "TF-Automation") {
+        name
+        description
+      }
+    }
+  `;
+
+  try {
+    const response = await octokit.graphql(query);
+    return response.repository;
+  } catch (error) {
+    throw error;
+  }
 
     //const response = await graphql(query, { headers: { authorization: process.env.TN_PAT, }, }, variables);
 
