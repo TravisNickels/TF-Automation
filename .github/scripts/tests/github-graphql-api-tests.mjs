@@ -4,14 +4,14 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 //import assert from 'assert';
-//import { Octokit } from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 //import github from '@actions/github';
 //import pkg from '@actions/github';
 //const { Github } = pkg;
 //import * as github from '@actions/github';
 //import core from '@actions/core';
 //import { Octokit } from 'octokit'
-import { Octokit } from '@octokit/core';
+//import { Octokit } from '@octokit/core';
 //import { createTokenAuth } from '@octokit/auth-token';
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
 
