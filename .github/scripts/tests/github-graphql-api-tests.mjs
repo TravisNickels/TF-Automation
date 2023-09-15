@@ -51,14 +51,13 @@ describe('My Tests', function() {
     //const octokit = new Octokit(myToken);
 
     const octokit = new Octokit({
-      //auth: process.env.TN_PAT,
-      auth: process.env.GITHUB_TOKEN,
+      auth: process.env.TN_PAT,
     });
 
     // Your GraphQL query
     const query = `
       query {
-        repository(owner: "TravisNickels", name: "TF-Automation") {
+        repository(owner: "TravisNickels", name: "mocked-repo") {
           name
           description
         }
