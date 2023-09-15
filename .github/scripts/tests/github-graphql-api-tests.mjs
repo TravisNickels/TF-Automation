@@ -66,8 +66,9 @@ describe('My Tests', function() {
 
     try {
       const response = await octokit.graphql(query);
-      console.log("response.repository: " + response.repository);
-      expect(response.repository.name).to.equal('repo');
+      console.log("response.repository.name: " + response.repository.name);
+      console.log("response.repository.description: " + response.repository.description);
+      expect(response.repository.name).to.equal('mocked-repo');
       return response.repository;
     } catch (error) {
       throw error;
