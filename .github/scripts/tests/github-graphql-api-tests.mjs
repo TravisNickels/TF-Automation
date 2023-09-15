@@ -90,6 +90,6 @@ describe('My Tests', function() {
     console.log("response.user.projectV2.id: " + response.user.projectV2.id);
     expect(response.user.projectV2.id).to.equal('PVT_UyhstYisiOxQ8yTr');
     //expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
-    expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr6"}}});
+    expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});
   });
 });
