@@ -20,24 +20,6 @@ import * as githubGraphQLApi from "../github-graphql-api.mjs";
 describe('My Tests', function() {
   before(() => {
     // Set up nock to intercept Github API requests
-    /* nock('https://api.github.com')
-      .post('/graphql') // Mock the GraphQL endpoint
-      .reply(200, (uri, requestBody) => {
-        console.log('Intercepted GraphQL request:', uri, requestBody);
-        return { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}};
-    }); */
-
-    /* nock('https://api.github.com')
-      .post('/graphql')
-      .reply(200, {
-        data: {
-          repository: {
-            name: 'mocked-repo',
-            description: 'Mocked description',
-          },
-        },
-      }); */
-
     /* fetchMock.post('https://api.github.com/graphql', {
       body: {
         data: {
@@ -80,14 +62,14 @@ describe('My Tests', function() {
     });
 
     // Your GraphQL query
-    const query = `
+    /* const query = `
       query {
         repository(owner: "TravisNickels", name: "TF-Automation") {
           name
           description
         }
       }
-    `;
+    `; */
 
     /* try {
       const response = await octokit.graphql(query);
@@ -108,6 +90,6 @@ describe('My Tests', function() {
     console.log("response.user.projectV2.id: " + response.user.projectV2.id);
     expect(response.user.projectV2.id).to.equal('PVT_UyhstYisiOxQ8yTr');
     //expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
-    expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});
+    expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr6"}}});
   });
 });
