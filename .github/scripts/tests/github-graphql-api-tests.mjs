@@ -19,7 +19,7 @@ import * as githubGraphQLApi from "../github-graphql-api.mjs";
 describe('My Tests', function() {
   before(() => {
     // Set up nock to intercept Github API requests
-    nock('http://api.github.com')
+    nock('https://api.github.com')
       .post('/graphql') // Mock the GraphQL endpoint
       .reply(200, { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
   })
