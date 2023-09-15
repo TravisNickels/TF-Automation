@@ -3,6 +3,7 @@
 //const { Octokit } = require("@octokit/rest");
 import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
+import fetchMock from 'fetch-mock';
 import nock from 'nock';
 //import assert from 'assert';
 import { Octokit } from '@octokit/rest';
