@@ -4,7 +4,6 @@
 import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import fetchMock from 'fetch-mock';
-import nock from 'nock';
 //import assert from 'assert';
 import { Octokit } from '@octokit/rest';
 import { graphql } from '@octokit/graphql';
@@ -39,7 +38,7 @@ describe('My Tests', function() {
         },
       }); */
 
-    fetchMock.post('https://api.github.com/graphql', {
+    /* fetchMock.post('https://api.github.com/graphql', {
       body: {
         data: {
           repository: {
@@ -49,6 +48,19 @@ describe('My Tests', function() {
         },
       headers: { 'content-type': 'application/json' },
       }
+    }); */
+
+    fetchMock.post('https://api.github.com/graphql', {
+      body: {
+        data: {
+          user: {
+            projectV2: {
+              id: 'PVT_UyhstYisiOxQ8yTr',
+            }
+          },
+        },
+      },
+      headers: { 'content-type': 'application/json' },
     });
   })
   it('should pass this test', async function() {
@@ -77,7 +89,7 @@ describe('My Tests', function() {
       }
     `;
 
-    try {
+    /* try {
       const response = await octokit.graphql(query);
       console.log("response.repository.name: " + response.repository.name);
       console.log("response.repository.description: " + response.repository.description);
@@ -85,7 +97,7 @@ describe('My Tests', function() {
       return response.repository;
     } catch (error) {
       throw error;
-    }
+    } */
 
     //const response = await graphql(query, { headers: { authorization: process.env.TN_PAT, }, }, variables);
 
@@ -93,6 +105,7 @@ describe('My Tests', function() {
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
+    console.log("response.user.projectV2.id: " + response.user.projectV2.id);
     expect(response.user.projectV2.id).to.equal('PVT_UyhstYisiOxQ8yTr');
     //expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
     expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});

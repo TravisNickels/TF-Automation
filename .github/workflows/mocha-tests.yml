@@ -28,9 +28,6 @@ jobs:
 
       - name: Install chai@latest
         run: npm install chai@latest
-
-      - name: Install nock@lastest
-        run: npm install nock@latest
       
       - name: Install fetch-mock@lastest
         run: npm install fetch-mock@latest
