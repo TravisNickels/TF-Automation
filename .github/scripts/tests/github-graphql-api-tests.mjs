@@ -55,21 +55,23 @@ describe('My Tests', function() {
     });
 
     // Your GraphQL query
-  const query = `
-    query {
-      repository(owner: "TravisNickels", name: "TF-Automation") {
-        name
-        description
+    const query = `
+      query {
+        repository(owner: "TravisNickels", name: "TF-Automation") {
+          name
+          description
+        }
       }
-    }
-  `;
+    `;
 
-  try {
-    const response = await octokit.graphql(query);
-    return response.repository;
-  } catch (error) {
-    throw error;
-  }
+    try {
+      const response = await octokit.graphql(query);
+      console.log("response.repository: " + response.repository);
+      expect(response.repository.name).to.equal('repo');
+      return response.repository;
+    } catch (error) {
+      throw error;
+    }
 
     //const response = await graphql(query, { headers: { authorization: process.env.TN_PAT, }, }, variables);
 
