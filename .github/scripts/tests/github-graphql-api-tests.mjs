@@ -1,7 +1,7 @@
 //const assert = require('assert');
 //const { describe } = require('node:test');
 //const { Octokit } = require("@octokit/rest");
-import { describe, it } from 'mocha';
+import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import nock from 'nock';
 //import assert from 'assert';
@@ -27,7 +27,7 @@ describe('My Tests', function() {
         return { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}};
     }); */
 
-    nock('https://api.github.com')
+    /* nock('https://api.github.com')
       .post('/graphql')
       .reply(200, {
         data: {
@@ -36,7 +36,7 @@ describe('My Tests', function() {
             description: 'Mocked description',
           },
         },
-      });
+      }); */
 
     fetchMock.post('https://api.github.com/graphql', {
       body: {
