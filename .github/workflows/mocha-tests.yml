@@ -32,11 +32,14 @@ jobs:
       - name: Install nock@lastest
         run: npm install nock@latest
       
-      - name: Install graphql@latest
-        run: npm install graphql@latest
+      - name: Install fetch-mock@lastest
+        run: npm install fetch-mock@latest
+
+      # - name: Install graphql@latest
+      #  run: npm install graphql@latest
        
-      - name: Install @octokit/graphql
-        run: npm install @octokit/graphql
+      #- name: Install @octokit/graphql
+      #  run: npm install @octokit/graphql
 
       - name: Install @actions/github
         run: npm install @actions/github

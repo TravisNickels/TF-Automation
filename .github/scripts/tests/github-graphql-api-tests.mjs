@@ -37,6 +37,18 @@ describe('My Tests', function() {
           },
         },
       });
+
+    fetchMock.post('https://api.github.com/graphql', {
+      body: {
+        data: {
+          repository: {
+            name: 'mocked-repo',
+            description: 'Mocked description',
+          },
+        },
+      headers: { 'content-type': 'application/json' },
+      }
+    });
   })
   it('should pass this test', async function() {
 
@@ -57,7 +69,7 @@ describe('My Tests', function() {
     // Your GraphQL query
     const query = `
       query {
-        repository(owner: "TravisNickels", name: "mocked-repo") {
+        repository(owner: "TravisNickels", name: "TF-Automation") {
           name
           description
         }
