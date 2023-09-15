@@ -17,23 +17,26 @@ jobs:
         with:
           node-version: '20'
 
+      #- name: Install @actions/core
+      #  run: npm install @actions/core
+
+      #- name: Install @octokit/auth-token
+      #  run: npm install @octokit/auth-token
+
+      - name: Install mocha@latest
+        run: npm install mocha@latest
+
+      - name: Install chai@latest
+        run: npm install chai@latest
+
+      - name: Install nock@lastest
+        run: npm install nock@latest
+
       - name: Install @actions/github
         run: npm install @actions/github
 
-      - name: Install @actions/core
-        run: npm install @actions/core
-
-      - name: Install @octokit/auth-token
-        run: npm install @octokit/auth-token
-
-      - name: Install @octokit/resQt
+      - name: Install @octokit/rest
         run: npm install @octokit/rest
-
-      - name: Install dependencies
-        run: npm install mocha@latest
-
-      - name: Install dependencies
-        run: npm install chai@latest
 
       - name: Run Mocha tests
         env:
