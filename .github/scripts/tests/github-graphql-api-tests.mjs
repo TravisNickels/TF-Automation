@@ -20,7 +20,7 @@ describe('My Tests', function() {
   before(() => {
     // Set up nock to intercept Github API requests
     nock('http://api.github.com')
-      .post('graphql') // Mock the GraphQL endpoint
+      .post('/graphql') // Mock the GraphQL endpoint
       .reply(200, { data: { user: { projectV2: { id: "PVT_kwHOBTAVOs4ASxQ8_asdf"}}}})
   })
   it('should pass this test', async function() {
