@@ -19,7 +19,7 @@ describe('My Tests', function() {
           user: {
             projectV2: {
               id: 'PVT_UyhstYisiOxQ8yTr',
-              description: 'Testing',
+              //description: 'Testing',
             }
           },
         },
