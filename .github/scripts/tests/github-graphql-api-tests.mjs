@@ -73,7 +73,8 @@ describe('My Tests', function() {
 
     //const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
+    expect(response.user.projectV2.id).to.equal('PVT_UyhstYisiOxQ8yTr');
     //expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
-    expect(response).to.deep.equal({data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
+    expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});
   });
 });
