@@ -21,7 +21,7 @@ describe('My Tests', function() {
     // Set up nock to intercept Github API requests
     nock('http://api.github.com')
       .post('/graphql') // Mock the GraphQL endpoint
-      .reply(200, { data: { user: { projectV2: { id: "PVT_kwHOBTAVOs4ASxQ8_asdf"}}}})
+      .reply(200, { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
   })
   it('should pass this test', async function() {
 
@@ -39,8 +39,41 @@ describe('My Tests', function() {
       auth: process.env.TN_PAT,
     });
 
-    const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
-    expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
+    const query = `query($owner: String!, $projectNumber: Int!){
+      user(login:$owner) {
+        projectV2(number:$projectNumber) {
+          id
+          title
+          fields(first: 100){
+            nodes {
+              ... on ProjectV2Field {
+                name
+                id
+              }
+              ... on ProjectV2SingleSelectField {
+                name
+                id
+                options{
+                  name
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const variables = {
+      owner: 'TravisNickels',
+      projectNumber: 170,
+    };
+
+    const response = await octokit.graphql(query, variables);
+
+    //const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
+
+    //expect(response.user.projectV2.id).to.equal('PVT_kwHOBTAVOs4ASxQ8_asdf');
+    expect(response).to.deep.equal({data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}});
   });
 });
