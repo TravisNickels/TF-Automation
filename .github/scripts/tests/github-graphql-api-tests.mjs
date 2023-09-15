@@ -20,6 +20,12 @@ import * as githubGraphQLApi from "../github-graphql-api.mjs";
 describe('My Tests', function() {
   before(() => {
     // Set up nock to intercept Github API requests
+    nock('https://api.github.com')
+      .post('/graphql') // Mock the GraphQL endpoint
+      .reply(200, (uri, requestBody) => {
+        console.log('Intercepted GraphQL request:', uri, requestBody);
+        return { data: { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}}};    
+    });
   })
   it('should pass this test', async function() {
 
@@ -36,10 +42,6 @@ describe('My Tests', function() {
     const octokit = new Octokit({
       auth: process.env.TN_PAT,
     });
-
-    nock('https://api.github.com')
-      .post('/graphql') // Mock the GraphQL endpoint
-      .reply(200, { user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});
 
     //const response = await graphql(query, { headers: { authorization: process.env.TN_PAT, }, }, variables);
 
