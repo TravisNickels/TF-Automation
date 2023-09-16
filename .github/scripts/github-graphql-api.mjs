@@ -42,6 +42,7 @@ export const getProjectV2Data = async (projectNumber, owner, github) => {
 
   // Used for testing
   getProjectV2Data.query = query;
+  getProjectV2Data.variables = variables;
 
   return await github.graphql(query, variables);
 }

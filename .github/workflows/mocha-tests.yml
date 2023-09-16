@@ -28,13 +28,16 @@ jobs:
 
       - name: Install chai@latest
         run: npm install chai@latest
-      
+
       - name: Install fetch-mock@lastest
         run: npm install fetch-mock@latest
 
+      - name: Install easygraphql-tester
+        run: npm install easygraphql-tester
+
       # - name: Install graphql@latest
       #  run: npm install graphql@latest
-       
+
       #- name: Install @octokit/graphql
       #  run: npm install @octokit/graphql
 
