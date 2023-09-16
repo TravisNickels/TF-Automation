@@ -33,7 +33,12 @@ jobs:
         run: npm install fetch-mock@latest
 
       - name: Install easygraphql-tester
-        run: npm install easygraphql-tester
+        run: npm install easygraphql-tester@latest
+
+      - name: Clear Cache
+        run: |
+          rm -rf $HOME/.npm
+          rm -rf $HOME/.cache
 
       # - name: Install graphql@latest
       #  run: npm install graphql@latest
