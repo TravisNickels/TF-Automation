@@ -2,7 +2,7 @@ import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import EasyGraphQLTester from 'easygraphql-tester';
 import fetchMock from 'fetch-mock';
-import schema from './schema.docs.graphql';
+import { schema } from '../schema.docs.graphql';
 import { Octokit } from '@octokit/rest';
 import * as githubGraphQLApi from '../github-graphql-api.mjs';
 

@@ -47,6 +47,9 @@ jobs:
       - name: Install @octokit/rest
         run: npm install @octokit/rest
 
+      - name: List Repository Contents
+        run: ls -R
+
       - name: Run Mocha tests
         env:
           TN_PAT: ${{ secrets.TN_PAT }}
