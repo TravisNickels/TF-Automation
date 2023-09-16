@@ -1,14 +1,14 @@
 /**
  * @param {int} projectNumber - The number of the GitHub projectV2 (e.g. 3)
  * @param {string} owner - The owner of the repo
- * @param {context} github - The github context of the running action
+ * @param {context} github - The hydrated Octokit github client 
  * @returns ProjectV2 field information object based on the graphQL query format.  For example:
  * - {variable}.user.projectV2.id
  * - {variable}.user.projectV2.title
- * - {variable}.user.projectV2.fields.nodes[array].name
- * - {variable}.user.projectV2.fields.nodes[array].id
- * - {variable}.user.projectV2.fields.nodes[array].options[array].name
- * - {variable}.user.projectV2.fields.nodes[array].options[array].id
+ * - {variable}.user.projectV2.fields.nodes[index].name
+ * - {variable}.user.projectV2.fields.nodes[index].id
+ * - {variable}.user.projectV2.fields.nodes[index].options[index].name
+ * - {variable}.user.projectV2.fields.nodes[index].options[index].id
  */
 export const getProjectV2Data = async (projectNumber, owner, github) => {
   const query = `query($owner: String!, $projectNumber: Int!){
@@ -40,6 +40,9 @@ export const getProjectV2Data = async (projectNumber, owner, github) => {
     projectNumber: projectNumber,
   };
 
+  // Used for testing
+  getProjectV2Data.query = query;
+
   return await github.graphql(query, variables);
 }
 
@@ -48,7 +51,7 @@ export const getProjectV2Data = async (projectNumber, owner, github) => {
  * @param {string} itemId - The node_id of the projectV2 item
  * @param {string} fieldId - The node_id of the projectV2 status field
  * @param {string} value  - The id of the single select status option
- * @param {context} github - The github context of the running action
+ * @param {context} github - The hydrated Octokit github client
  * @returns The title of the projectV2 item that had the status updated
  * - updateProjectV2ItemFieldValue.projectV2Item.fieldValueByName.text
  */
@@ -85,7 +88,7 @@ export const updateStatus = async (projectId, itemId, fieldId, value, github) =>
  * @param {*} nodeId - The node_id of the issue or pull request
  * @param {*} projectId - The node_id of the projectV2
  * @param {*} eventName - The event name from the action context
- * @param {*} github - The github context of the running action
+ * @param {*} github - The hydrated Octokit github client
  * @returns Project item id and the corresponding projectV2 id, title, and number
  * - {variable}.id
  * - {variable}.project.id
