@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import fetchMock from 'fetch-mock';
 import { Octokit } from '@octokit/rest';
 import * as githubGraphQLApi from "../github-graphql-api.mjs";
+import { getProjectV2Data } from "../github-graphql-api.mjs";
 
 //import assert from 'assert';
 //import github from '@actions/github';
@@ -42,7 +43,7 @@ describe('My Tests', function() {
 
     const response = await githubGraphQLApi.getProjectV2Data(170, 'TravisNickels', octokit );
 
-    console.log("Query: " + githubGraphQLApi.getProjectV2Data.query);
+    console.log("Query: " + getProjectV2Data.query);
     console.log("response.user.projectV2.id: " + response.user.projectV2.id);
     expect(response.user.projectV2.id).to.equal('PVT_UyhstYisiOxQ8yTr');
     expect(response).to.deep.equal({ user: { projectV2: { id: "PVT_UyhstYisiOxQ8yTr"}}});
