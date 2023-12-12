@@ -210,11 +210,18 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ reposit
 - <https://www.apollographql.com/blog/graphql/basics/using-the-github-graphql-api-with-apollo-studio-explorer/>
 - <https://graphql.org/>
 
-> **Note**
+> [!NOTE]
 > Note test
 
-> **Important**
+> [!TIP]
+> Tip test
+
+> [!IMPORTANT]
 > Important test
 
-> **Warning**
+> [!WARNING]
 > Warning test
+
+> [!CAUTION]
+> Caution test
+
