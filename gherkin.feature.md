@@ -16,8 +16,9 @@ not the Bee Gees song
 #### Examples
 
 | start | eat | left |
-| 12 | 5 | 7 |
-| 20 | 5 | 15 |
+| ----- | --- | ---- |
+| 12    | 5   | 7    |
+| 20    | 5   | 15   |
 
 ```Cucumber
 Feature: Serve coffee
@@ -33,6 +34,7 @@ Feature: Serve coffee
 
     Examples:
       | start | eat | left |
+      |-------|-----|------|
       | 12    | 5   | 7    |
       | 20    | 5   | 15   |
 
