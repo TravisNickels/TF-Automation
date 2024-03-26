@@ -16,14 +16,13 @@ not the Bee Gees song
 #### Examples
 
 | start | eat | left |
-| 12    | 5   | 7    |
-| 20    | 5   | 15   |
+| 12 | 5 | 7 |
+| 20 | 5 | 15 |
 
-
-
+```Cucumber
 Feature: Serve coffee
   In order to earn money
-  Customers should be able to 
+  Customers should be able to
   buy coffee at all times
 
   Scenario: Buy last coffee
@@ -36,3 +35,4 @@ Feature: Serve coffee
       | start | eat | left |
       | 12    | 5   | 7    |
       | 20    | 5   | 15   |
+```
