@@ -19,7 +19,7 @@
 > ```gherkin
 > Then the max number of grouping segments is equal to the number of periods '.'
 > in the endpoint name and the following segments are generated
-> Examples
+> Example
 > ```
 >
 > | Group by options |
@@ -44,7 +44,7 @@
 > When 1 endpoint has more periods '.' in the endpoint name
 > Then the max number of grouping segments is equal to the number of periods '.'
 >      in the endpoint name that has the most periods
-> Examples
+> Example
 > ```
 >
 > | Group by options |
