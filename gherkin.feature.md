@@ -1,64 +1,25 @@
-# Feature: Staying alive
+# **Capability:** Monitoring
 
-This is about actually staying alive,
-not the Bee Gees song
+## **Feature:** Endpoint grouping
 
-## Rule: If you don't eat you die
+### **Rule:** The number of grouping segments is determined by the number of periods in the endpoint name
 
-`@important` `@essential`
+#### **Examples/Scenario**
 
-### Scenario Outline: eating
+```gherkin
+Given the following monitored endpoints
+|Endpoint name|
+|-------------|
+|Universe.Solarsystem.Endpoint1 |
+|Universe.Solarsystem.Endpoint2 |
+|Universe.Solarsystem.Endpoint3 |
 
-- Given there are <start> cucumbers
-- When I eat <eat> cucumbers
-- Then I should have <left> cucumbers
+Then the max number of grouping segments is equal to the number of periods '.' in the endpoint name
+and the the following segments are generated
 
-#### Examples
-
-| start | eat | left |
-| ----- | --- | ---- |
-| 12    | 5   | 7    |
-| 20    | 5   | 15   |
-
-```Cucumber
-Feature: Serve coffee
-  In order to earn money
-  Customers should be able to
-  buy coffee at all times
-
-  Scenario: Buy last coffee
-    Given there are 1 coffees left in the machine
-    And I have deposited 1 dollar
-    When I press the coffee button
-    Then I should be served a coffee
-
-    Examples:
-      | start | eat | left |
-      |-------|-----|------|
-      | 12    | 5   | 7    |
-      | 20    | 5   | 15   |
-
-
-# Feature: Staying alive
-
-This is about actually staying alive,
-not the Bee Gees song
-
-## Rule: If you don't eat you die
-
-`@important` `@essential`
-
-### Scenario Outline: eating
-
-- Given there are <start> cucumbers
-- When I eat <eat> cucumbers
-- Then I should have <left> cucumbers
-
-#### Examples
-
-  | start | eat | left |
-  | ----- | --- | ---- |
-  |    12 |   5 |    7 |
-  |    20 |   5 |   15 |
+|Group by options |
+|no grouping |
+|Max. 1 segments |
+|Max. 2 segments |
 
 ```
