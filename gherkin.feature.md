@@ -40,11 +40,12 @@
 > | Universe.Solarsystem.Endpoint2       |
 > | Universe.Solarsystem.Endpoint3       |
 >
-> ```gherkin
+> ```Cucumber
 > When 1 endpoint has more periods '.' in the endpoint name
 > Then the max number of grouping segments is equal to the number of periods '.'
 >      in the endpoint name that has the most periods
 > Example
+> Examples
 > ```
 >
 > | Group by options |
