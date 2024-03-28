@@ -4,7 +4,7 @@
 
 ### Rule: The number of grouping segments is determined by the number of periods in the endpoint name
 
-#### Example: All endpoints have two periods in their name
+#### _Example_: All endpoints have two periods in their name
 
 > ```gherkin
 > Given the following monitored endpoints
@@ -17,8 +17,9 @@
 > | Universe.Solarsystem.Endpoint3 |
 >
 > ```gherkin
-> Then the max number of grouping segments is equal to the number of periods '.' in the endpoint name
-> and the the following segments are generated
+> Then the max number of grouping segments is equal to the number of periods '.'
+> in the endpoint name and the following segments are generated
+> Examples
 > ```
 >
 > | Group by options |
@@ -27,7 +28,7 @@
 > | Max. 1 segments  |
 > | Max. 2 segments  |
 
-#### **Example:** One endpoint has three periods in its name and the other endpoints have two periods in their name
+#### _Example_: One endpoint has three periods in its name and the other endpoints have two periods in their name
 
 > ```gherkin
 > Given the following monitored endpoints
@@ -41,7 +42,9 @@
 >
 > ```gherkin
 > When 1 endpoint has more periods '.' in the endpoint name
-> Then the max number of grouping segments is equal to the number of periods '.' in the endpoint name that has the most periods
+> Then the max number of grouping segments is equal to the number of periods '.'
+>      in the endpoint name that has the most periods
+> Examples
 > ```
 >
 > | Group by options |
