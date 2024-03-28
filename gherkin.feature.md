@@ -38,7 +38,7 @@
 > | Universe.Solarsystem.Earth.Endpoint1 |
 > | Universe.Solarsystem.Endpoint2       |
 > | Universe.Solarsystem.Endpoint3       |
-
+>
 > ```gherkin
 > When 1 endpoint has more periods '.' in the endpoint name
 > Then the max number of grouping segments is equal to the number of periods '.' in the endpoint name that has the most periods
