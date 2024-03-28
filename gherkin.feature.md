@@ -9,18 +9,18 @@
 > ```gherkin
 > Given the following monitored endpoints
 > ```
-
+>
 > | Endpoint name                  |
 > | ------------------------------ |
 > | Universe.Solarsystem.Endpoint1 |
 > | Universe.Solarsystem.Endpoint2 |
 > | Universe.Solarsystem.Endpoint3 |
-
+>
 > ```gherkin
 > Then the max number of grouping segments is equal to the number of periods '.' in the endpoint name
 > and the the following segments are generated
 > ```
-
+>
 > | Group by options |
 > | ---------------- |
 > | no grouping      |
