@@ -55,7 +55,7 @@ Before running GitHub CLI commands, you must authenticate by running `gh auth lo
 
 ## legacy_global_id / next_global_id
 
-legacy_global_id is is now deprecated, which typically looks like this `MDQ6VXNlcjM0MDczMDM=`.  There is now a next_global_id that is being used that has a format like `PVT_kwHOBTAVOs4ANTT3`. By adding another header to the API call the new `next_global_id` can be retrieved.
+legacy_global_id is is now deprecated, which typically looks like this `MDQ6VXNlcjM0MDczMDM=`. There is now a next_global_id that is being used that has a format like `PVT_kwHOBTAVOs4ANTT3`. By adding another header to the API call the new `next_global_id` can be retrieved.
 
 ### Powershell
 
@@ -118,7 +118,7 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" -f query='mutation{createProjectV
 
 ### Using the legacy_node_id
 
-If you use the legacy_node_id, but include the `X-Github-Next-Global-ID: 1` header then the project will get created, but a deprecation warning will show up letting you  know that you should use `next_global_id` instead.
+If you use the legacy_node_id, but include the `X-Github-Next-Global-ID: 1` header then the project will get created, but a deprecation warning will show up letting you know that you should use `next_global_id` instead.
 
 #### Powershell
 
@@ -224,4 +224,3 @@ gh api graphql -H "X-Github-Next-Global-ID: 1" --raw-field query='query{ reposit
 
 > [!CAUTION]
 > Caution test
-
