@@ -19,7 +19,6 @@
 > ```gherkin
 > Then the max number of grouping segments is equal to the number of periods '.'
 > in the endpoint name and the following segments are generated
-> Example
 > ```
 >
 > | Group by options |
@@ -40,12 +39,10 @@
 > | Universe.Solarsystem.Endpoint2       |
 > | Universe.Solarsystem.Endpoint3       |
 >
-> ```Cucumber
+> ```gherkin
 > When 1 endpoint has more periods '.' in the endpoint name
 > Then the max number of grouping segments is equal to the number of periods '.'
 >      in the endpoint name that has the most periods
-> Example
-> Examples
 > ```
 >
 > | Group by options |
