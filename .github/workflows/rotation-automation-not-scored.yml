@@ -18,4 +18,6 @@ jobs:
           gh_token: ${{ secrets.TN_PAT }}
           user: TravisNickels
           resource_node_id: ${{ github.event.issue.node_id }}
-          status_value: ${{ env.not_scored }}
+          operation_mode: custom_field
+          custom_field_values: '[{\"name\": \"Task Type\",\"type\": \"single_select\",\"value\": \"Rescore needed\"}]'
+          #status_value: ${{ env.not_scored }}
