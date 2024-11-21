@@ -1,7 +1,7 @@
 name: Move issues opened or reopened to the corresponding column
 on:
   issues:
-    types: [opened, reopened]
+    types: [opened, reopened, labeled]
 
 env:
   not_scored: Not Scored
@@ -9,7 +9,7 @@ env:
 jobs:
   add-to-not-scored-column:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'issues' && !contains(github.event.issue.labels.*.name, 'Rotation-group tasks') && contains(github.event.issue.labels.*.name, 'Job to be Done') }}
+    if: ${{ github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'Job to be Done') }}
     steps:
       - name: Add issue to project
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
@@ -19,5 +19,5 @@ jobs:
           user: TravisNickels
           resource_node_id: ${{ github.event.issue.node_id }}
           operation_mode: custom_field
-          custom_field_values: '[{\"name\": \"Task Type\",\"type\": \"single_select\",\"value\": \"Rescore needed\"}]'
+          custom_field_values: '[{\"name\": \"Review status\",\"type\": \"single_select\",\"value\": \"Needs scoring\"}]'
           #status_value: ${{ env.not_scored }}

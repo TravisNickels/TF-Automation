@@ -1,0 +1,18 @@
+name: Trigger the Signal review pending on Competitive Landscape issues
+on:
+  issue_comment:
+    types: [created, edited]
+jobs:
+  automate-project-columns:
+    runs-on: ubuntu-latest
+    if: ${{ ( github.event.action == 'created' || github.event.action == 'edited' ) && contains(github.event.issue.labels.*.name, 'Competitive Landscape') }}
+    steps:
+      - name: Add issue to exploration rotationproject
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: 165
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: Particular
+          resource_node_id: ${{ github.event.issue.node_id }}
+          operation_mode: custom_field
+          custom_field_values: '[{\"name\": \"Signals review\",\"type\": \"single_select\",\"value\": \"Signal review pending\"}]'

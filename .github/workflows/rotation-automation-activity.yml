@@ -1,0 +1,23 @@
+name: Move issues labeled with Activity labels to the corresponding column
+on:
+  issues:
+    types: [labeled]
+    
+jobs:
+  automate-project-columns:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'labeled' && startsWith(github.event.label.name, 'Activity - ') }}
+    steps:
+      - name: Split label name
+        env:
+          LABEL: ${{ github.event.label.name }}
+        id: split
+        run: echo "label_fragment=${LABEL##Activity - }"  >> "$GITHUB_OUTPUT"   
+      - name: Add issue to project
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: 165
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: Particular
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: ${{ steps.split.outputs.label_fragment }}

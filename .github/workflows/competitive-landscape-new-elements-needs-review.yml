@@ -1,0 +1,18 @@
+name: Add the issue to the Monitor the Competitive Landscape project and apply the Needs Review status to issues labeled with Competitive Landscape labels
+on:
+  issues:
+    types: [labeled]
+jobs:
+  automate-project-columns:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'labeled' && startsWith(github.event.label.name, 'Competitive Landscape') }}
+    steps:
+      - name: Add issue to exploration rotation project
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: 165
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: Particular
+          resource_node_id: ${{ github.event.issue.node_id }}
+          operation_mode: custom_field
+          custom_field_values: '[{\"name\": \"Review status\",\"type\": \"single_select\",\"value\": \"Needs Review\"}]'

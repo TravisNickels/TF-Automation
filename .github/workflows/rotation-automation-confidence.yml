@@ -1,0 +1,65 @@
+name: Managed confidence related updates to issues
+on:
+  issues:
+    types: [labeled, unlabeled]
+env:
+  not_scored: Not Scored
+  organization: Particular
+  project: 165
+
+jobs:
+  confidence-label-added:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'labeled' && startsWith(github.event.label.name, 'Confidence - ') }}
+    steps:
+      - name: Split label name
+        env:
+          LABEL: ${{ github.event.label.name }}
+        id: split
+        run: echo "label_fragment=${LABEL##Confidence - }"  >> "$GITHUB_OUTPUT"
+      - name: Determine current workflow date
+        id: date
+        run: echo "workflow_date=$(date +"%Y-%m-%dT%H:%M:%S%:z")"  >> "$GITHUB_OUTPUT"
+      - name: Move issue into column ${{ steps.split.outputs.label_fragment }}
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: ${{ env.project }}
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: ${{ env.organization }}
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: ${{ format('{0} Confidence', steps.split.outputs.label_fragment) }}
+      - name: Update last scored field to ${{ steps.date.outputs.workflow_date }}
+        if: ${{ github.event.action == 'labeled' && startsWith(github.event.label.name, 'Confidence - ') }}
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: ${{ env.project }}
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: ${{ env.organization }}
+          resource_node_id: ${{ github.event.issue.node_id }}
+          operation_mode: custom_field
+          custom_field_values: '[{\"name\": \"LastScored\",\"type\": \"date\",\"value\": \"${{ steps.date.outputs.workflow_date }}\"}]'
+
+  confidence-label-removed:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'unlabeled' && startsWith(github.event.label.name, 'Confidence - ') }}
+    steps:
+      - name: Move issue from column  ${{ steps.split.outputs.label_fragment }} to ${{ env.not_scored }}
+        if: ${{ github.event.action == 'unlabeled' && startsWith(github.event.label.name, 'Confidence - ') }}
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: ${{ env.project }}
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: ${{ env.organization }}
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: ${{ env.not_scored }}
+      - name: Remove last scored field
+        if: ${{ github.event.action == 'unlabeled' && startsWith(github.event.label.name, 'Confidence - ') }}
+        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+        with:
+          project_id: ${{ env.project }}
+          gh_token: ${{ secrets.PROJECT_AUTOMATION_GITHUB_TOKEN }}
+          organization: ${{ env.organization }}
+          resource_node_id: ${{ github.event.issue.node_id }}
+          operation_mode: custom_field
+          custom_field_values: '[{\"name\": \"LastScored\",\"type\": \"date\",\"value\": \"1970-01-01\"}]'
+
